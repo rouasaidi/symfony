@@ -1,0 +1,159 @@
+$gray-color: #363A40;
+$blue-color: #4C6EF4;
+$green-color: #81C91D;
+$input-background-color: #F2F3F5;
+$icon-color: #ff7870;
+$font-family: 'Poppins', sans-serif;
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #F2F3F5;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 80px 20px;
+  
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.signup {
+  padding: 80px 60px;
+  background-color: white;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.signup-heading {
+  text-align: center;
+  font-weight: 600;
+  color: $gray-color;
+  font-size: 35px;
+  margin-bottom : 35px;
+}
+
+.signup-google {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 16px;
+  background-color: $blue-color;
+  text-decoration: none;
+  padding: 8px;
+  margin-bottom: 45px;
+  box-shadow: 0 10px 20px -5px rgba($blue-color, 0.9);
+}
+
+.signup-google-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $icon-color;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 25px;
+}
+
+.signup-google-text {
+  color: white;
+  font-weight: 500;
+  display: block;
+  margin: 0 auto;
+}
+
+.signup-or {
+  color: $gray-color;
+  display: block;
+  text-align: center;
+  position: relative;
+  margin-bottom: 55px;
+}
+
+.signup-or-text {
+  display: inline-block;
+  padding: 5px 20px;
+  background-color: white;
+  position: relative;
+  font-size: 14px;
+}
+
+.signup-or:before {
+  content: "";
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background-color: #999;
+  transform: translateY(-50%);
+}
+
+.signup-already {
+  text-align: center;
+  color: $gray-color;
+  font-size: 13px;
+}
+
+.signup-already-link {
+  color: $blue-color;
+  text-decoration: none;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-label {
+  display: inline-block;
+  cursor: pointer;
+  color: $gray-color;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  border-radius: 15px;
+  border: 0;
+  outline: none;
+  font-family: $font-family;
+  background-color: $input-background-color;
+  color: $gray-color;
+  font-size: 16px;
+}
+
+.form-input::-webkit-input-placeholder {
+  color: #B4BDC1;
+}
+
+.form-submit {
+  display: block;
+  margin-top: 45px;
+  width: 100%;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  border: 0;
+  border-radius: 15px;
+  background-color: $green-color;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: $font-family;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 20px -5px rgba($green-color, 0.9);
+  outline: none;
+}
+
+@media screen and (max-width: 767px) {
+  .signup {
+    padding: 30px 20px;
+  }
+}
