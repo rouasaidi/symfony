@@ -4,40 +4,40 @@
 
 {% block body %}
     <h1>Product index</h1>
+<section class="ftco-section ftco-no-pb">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-8 text-center heading-section ftco-animate">
+                <h2 class="mb-4"><span>Certified</span> Products</h2>
+                <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country</p>
+            </div>
+        </div> 
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-6 col-lg-3 ftco-animate">
+                <div class="staff">
+                    <div class="img-wrap d-flex align-items-stretch">
+                        <div class="img align-self-stretch">
+                            <img src="{{ asset('images/teacher-2.jpg') }}" alt="{{ product.name }}">
+                        </div>
+                    </div>
+                    <div class="text pt-3 text-center">
+                        <h3>{{ product.name }}</h3>
+                        <span class="position mb-2">Price: {{ product.price }}</span>
+                        <div class="faded">
+                            <p>{{ product.description }}</p>
+                            <!-- You can add social media links or any other information related to the product here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.quantity }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.image }}</td>
-                <td>
-                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+
 
     <a href="{{ path('app_product_new') }}">Create new</a>
 {% endblock %}
