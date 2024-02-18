@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Our events{% endblock %}
+{% block body %}
+<section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-2 bread">Our Events</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Events <i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            {% for i in base_events %}
+            <div class="col-md-6 course d-lg-flex ftco-animate">
+                <div class="img" style="background-image: url(images/course-1.jpg);"></div>
+                <div class="text bg-light p-4">
+                    <h3><a href="#">{{ i.nom }}</a></h3>
+                    <p class="subheading"><span>Event name:</span> {{ i.nom }}</p>
+                    <p>
+                        Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country
+                        {{ i.description }}
+                    </p>
+                     <p><a href="{{ path('app_addticddket', {'id': i.id}) }}" class="btn btn-secondary px-4 py-3">Buy Ticket</a></p>
+                </div>
+            </div>
+           
+            {% endfor %}
+        </div>
+    </div>
+</section>
+    {% endblock %}
