@@ -29,6 +29,8 @@
                             <!-- You can add social media links or any other information related to the product here -->
                         </div>
                     </div>
+                        <a class="btn btn-primary " href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                        <a class="btn btn-danger " href="{{ path('app_product_delete', {'id': product.id}) }}">delete</a>
                 </div>
             </div>
             {% endfor %}
@@ -39,5 +41,5 @@
 
 
 
-    <a href="{{ path('app_product_new') }}">Create new</a>
+    <a class="btn btn-primary px-4 py-3" href="{{ path('app_product_new') }}">Create new</a>
 {% endblock %}
