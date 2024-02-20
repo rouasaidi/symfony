@@ -21,6 +21,13 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
+    #[Route('/aa', name: 'app_product_indexaa', methods: ['GET'])]
+    public function indexaa(ProductRepository $productRepository): Response
+    {
+        return $this->render('product/backk.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -32,7 +39,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setImage('image not set');
             $entityManager->persist($product);
-    
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
@@ -75,7 +82,7 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $entityManager->remove($product);
             $entityManager->flush();
         }
