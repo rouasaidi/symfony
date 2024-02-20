@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FeedbackDon index{% endblock %}
+
+{% block body %}
+    <h1>FeedbackDon index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Date_feedback</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for feedback_don in feedback_dons %}
+            <tr>
+                <td>{{ feedback_don.id }}</td>
+                <td>{{ feedback_don.description }}</td>
+                <td>{{ feedback_don.dateFeedback ? feedback_don.dateFeedback|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_feedback_don_show', {'id': feedback_don.id}) }}">show</a>
+                    <a href="{{ path('app_feedback_don_edit', {'id': feedback_don.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_feedback_don_new') }}">Create new</a>
+{% endblock %}

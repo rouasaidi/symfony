@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Donation{% endblock %}
+
+{% block body %}
+<section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+          <h1 class="mb-2 bread">Donations</h1>
+          <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span> Products/Donations <i class="ion-ios-arrow-forward"></i></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   
+  <section class="ftco-section">
+    	<div class="container">
+    		<div class="row">
+            {% for donation in donations %}  
+        	<div class="col-md-6 col-lg-3 ftco-animate">  
+                
+                <div class="pricing-entry bg-light pb-4 text-center">  
+        			<div>
+	        			<h3 class="mb-3">{{ donation.name }}</h3>
+	        		</div>
+	        		<div class="img" style="background-image: url(C:/Users/leila/Downloads/kiddos-master/kiddos-master/images/bg_1.jpg);"></div>
+	        		<div class="px-4">
+	        			<p>{{ donation.description }}</p>
+        			</div>
+        			<div class="button-group">
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-sm btn-primary px-3 py-2">Ajouter Panier</a>
+                            <a href="#" class="btn btn-sm btn-primary px-3 py-2">Ajouter FeedBack</a>
+                        </div>
+                    </div>
+        		</div>
+              
+                <div>  
+                    <a href="{{ path('app_donation_show', {'id': donation.id}) }}">show</a>
+                </div>
+                
+        	</div>
+            {% endfor %}
+            </div>
+    	</div>
+         
+    </section>
+    
+
+{% endblock %}

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DonationRepository::class)]
 class Donation
@@ -17,15 +18,30 @@ class Donation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank (message:'champ obligatoire')]
+    #[Assert\Regex(
+        pattern: '/^[a-z]+$/i',
+        message: 'le nom du produit ne contient pas des nombre',
+        match: true
+    )]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank (message:'champ obligatoire')]
+    #[Assert\Length(
+        min: 3,
+        max: 7,
+        minMessage: 'longeure insuffisante (min {{ limit }} caractères)',
+        maxMessage: 'trop long ( limite atteinte({{ limit }})) ',
+    )]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $category = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank (message:'champ obligatoire')]
+    #[Assert\Positive]
     private ?int $quantity = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -192,5 +208,9 @@ class Donation
         $this->panier = $panier;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return (string)$this->getName();
     }
 }

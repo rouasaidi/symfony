@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Donation{% endblock %}
+
+{% block body %}
+
+   
+    <section class="ftco-section ftco-consult ftco-no-pt ftco-no-pb" style="background-image: url(images/bg_5.jpg);" data-stellar-background-ratio="0.5">
+    	<div class="container">
+    		<div class="row justify-content-end">
+    			<div class="col-md-6 py-5 px-md-5 bg-primary">
+	          <div class="heading-section heading-section-white ftco-animate mb-5">
+	          	<span class="subheading">Create New Donation</span>
+	            <h2 class="mb-4">Donate Now</h2>
+	            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+	          </div>
+              {{ include('donation/_form.html.twig') }}
+    			</div>
+        </div>
+    	</div>
+    </section>
+
+    <a href="{{ path('app_donation_index') }}">back to list</a>
+{% endblock %}
