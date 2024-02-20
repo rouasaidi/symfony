@@ -26,8 +26,6 @@ class DonationType extends AbstractType
             ->add('date_don')
             ->add('status')
             ->add('image')
-            ->add('user')
-            ->add('panier')
             
             ;
            

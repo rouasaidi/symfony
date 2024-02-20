@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FeedbackDon{% endblock %}
+
+{% block body %}
+    <h1>Create new FeedbackDon</h1>
+
+    {{ include('b_feedback_don/_form.html.twig') }}
+
+    <a href="{{ path('app_b_feedback_don_index') }}">back to list</a>
+{% endblock %}

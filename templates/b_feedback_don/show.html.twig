@@ -1,0 +1,29 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}FeedbackDon{% endblock %}
+
+{% block body %}
+    <h1>FeedbackDon</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ feedback_don.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ feedback_don.description }}</td>
+            </tr>
+            <tr>
+                <th>Date_feedback</th>
+                <td>{{ feedback_don.dateFeedback ? feedback_don.dateFeedback|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_b_feedback_don_index') }}">back to list</a>
+
+
+    {{ include('b_feedback_don/_delete_form.html.twig') }}
+{% endblock %}

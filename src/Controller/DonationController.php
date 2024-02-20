@@ -62,7 +62,9 @@ class DonationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_donation_index', [], Response::HTTP_SEE_OTHER);
+            $donationId = $donation->getId();
+
+            return $this->redirectToRoute('app_donation_show', ['id' => $donationId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('donation/edit.html.twig', [

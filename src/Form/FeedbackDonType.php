@@ -14,8 +14,6 @@ class FeedbackDonType extends AbstractType
         $builder
             ->add('description')
             ->add('date_feedback')
-            ->add('donation')
-            ->add('user')
         ;
     }
 
