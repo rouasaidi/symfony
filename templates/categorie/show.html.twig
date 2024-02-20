@@ -1,0 +1,30 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Categorie{% endblock %}
+
+{% block body %}
+    <h1>Categorie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ categorie.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ categorie.type }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ categorie.image }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary py-1 px-1" href="{{ path('app_categorie_index') }}">back to list</a>
+
+    <a class="btn btn-secondary py-1 px-1" href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
+
+   
+{% endblock %}

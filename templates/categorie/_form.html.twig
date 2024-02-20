@@ -1,0 +1,46 @@
+
+				{{ form_start(form,{'attr': {'novalidate': 'novalidate' , 'class' : 'appointment-form ftco-animate'}}) }}
+				<div class="d-md-flex">
+					<div class="form-group">
+						{{  form_label ( form.type,'type categorie' ,{ 'attr': {'class': 'form-control'}}) }}
+
+						{% if form_errors(form.type) is not empty  %}
+							{{  form_errors( form.type ,{ 'attr': {'class': 'text-danger'}}) }}
+							{% else %}
+
+						{% endif %}
+
+						{{  form_widget ( form.type ,{ 'attr': {'class': 'form-control'}}) }}
+					</div>
+					<div class="form-group ml-md-4">
+						{{  form_label ( form.image,'image' ,{ 'attr': {'class': 'form-control'}}) }}
+
+						{% if form_errors(form.image) is not empty  %}
+							{{  form_errors( form.image ,{ 'attr': {'class': 'text-danger'}}) }}
+							{% else %}
+
+						{% endif %}
+						{{  form_widget ( form.image ,{ 'attr': {'class': 'form-control'}}) }}
+
+
+					</div>
+						<div class="form-group">
+						{{  form_label ( form.user,'user' ,{ 'attr': {'class': 'form-control'}}) }}
+
+						{% if form_errors(form.user) is not empty  %}
+							{{  form_errors( form.user ,{ 'attr': {'class': 'text-danger'}}) }}
+							{% else %}
+
+						{% endif %}
+
+						{{  form_widget ( form.user ,{ 'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+				<div class="form-group ml-md-4">
+					<button type="submit" class="btn btn-secondary py-3 px-4">{{ button_label|default('Save') }}</button>
+				</div>
+			</div>
+		
+	</div>
+	{{ form_end(form) }}
+
