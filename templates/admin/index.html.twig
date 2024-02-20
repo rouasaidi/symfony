@@ -1,0 +1,88 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Hello Adminlist{% endblock %}
+
+{% block body %}
+<body>
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Profil </title>
+    </head>
+    
+    <body>
+   
+    
+            <div class="col-lg-8 d-flex align-items-stretch">
+                <div class="card w-100">
+                  <div class="card-body p-4">
+                    <h5 class="card-title fw-semibold mb-4">admin List </h5>
+                    <div class="table-responsive">
+                      <table class="table text-nowrap mb-0 align-middle">
+                        <thead class="text-dark fs-4">
+                          <tr>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Id</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Name</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Email</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Password</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Phone</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">CIN</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Role</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">image</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">edit</h6>
+                          </th>
+                          <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">delete</h6>
+                        </th>
+                          </tr>
+                        </thead>
+                        {% for a in user %}
+                          <tr>
+                            <td>{{ a.id }}</td>
+                            <td>{{ a.name }}</td>
+                            <td>{{ a.email }}</td>
+                            <td>{{ a.password }}</td>
+                            <td>{{ a.phone }}</td>
+                            <td>{{ a.cin }}</td>
+                            <td>{{ a.role }}</td>
+                            <td>{{ a.image }}</td>
+                            <td>
+                              <a href="{{ path('app_edditadmin',{'id':a.id}) }}">
+                                  <img src="https://cdn-icons-png.flaticon.com/512/9625/9625677.png" alt="Supprimer" width="40" height="40"> <!-- Insérer l'URL de l'image de suppression -->
+                              </a>
+                          </td>
+                            <td>
+                                <a href="{{ path('app_deleteadmin',{'id':a.id}) }}" >
+                                    <img src="https://static.vecteezy.com/system/resources/previews/000/442/652/original/delete-vector-icon.jpg" alt="Supprimer" width="40" height="40"> <!-- Insérer l'URL de l'image de suppression -->
+                                </a>
+                            </td>
+                          </tr>
+                        {% endfor %}
+    </table>
+    </body>
+    </html>
+
+</body>
+
+{% endblock %}

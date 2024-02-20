@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.name }}{% endblock %}
+
+{% block body %}
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profil de {{ user.name }}</title>
+</head>
+<body>
+    <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <div class="card h-100">
+                                <img src="{{ user.image }}" alt="Image " class="rounded img-fluid">
+                               
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-10">
+                <div class="card-body">
+                <div class="row gutters">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<h4 class="mb-2 text-primary">Personal Details</h4>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="mb-2 text-primary">
+					<label for="fullName">Full Name</label>
+				</div>
+                <h6 class="user-name">{{ user.name }}</h6>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="mb-2 text-primary">
+					<label for="eMail">Email</label>
+				</div>
+                <h6 class="user-email">{{ user.email }}</h6>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="mb-2 text-primary">
+					<label for="phone">Phone</label>
+                   
+				</div>
+                <h6 class="user-phone">{{ user.phone }}</h6>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="mb-2 text-primary">
+					<label for="website">CIN</label>
+                   
+					
+				</div>
+                <h6 class="user-phone">{{ user.cin }}</h6>
+			</div>
+		</div>
+		<div class="row gutters">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<h6 class="mt-3 mb-2 text-primary">password </h6>
+                <h6 class="user-phone">{{ user.password }}</h6>
+			</div>
+		
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<h6 class="mt-3 mb-2 text-primary">Role </h6>
+                   
+					
+				</div>
+                <h6 class="user-phone">{{ user.role }}</h6>
+			</div>
+			
+		</div>
+        <div class="row gutters">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+         <div class="text-right">
+            <a href="{{ path('app_delete', {'id': user.id}) }}" class="btn btn-secondary" id="deleteButton">Delete</a>
+             <a href="{{ path('app_eddit', {'id': user.id}) }}" class="btn btn-primary" id="editeButton">edite</a>
+            
+         </div>
+		
+          
+        </div>
+    </div>
+</div>
+
+
+
+	</div>
+</div>
+</div>
+</div>
+</div>
+                    <!-- Rest of your HTML content for personal details and address -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+</body>
+{% endblock %}

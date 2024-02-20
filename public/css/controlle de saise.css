@@ -1,0 +1,31 @@
+/* public/css/fiche.css */
+
+.fiche-container {
+    width: 300px; /* Largeur de la fiche */
+    padding: 20px; /* Espacement intérieur de la fiche */
+    border: 1px solid #ccc; /* Bordure de la fiche */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    background-color: #fff; /* Couleur de fond */
+}
+
+.fiche-title {
+    font-size: 20px; /* Taille de la police du titre */
+    font-weight: bold; /* Gras pour le titre */
+    margin-bottom: 10px; /* Espacement en bas du titre */
+}
+
+.fiche-label {
+    font-weight: bold; /* Gras pour les étiquettes */
+}
+
+.fiche-value {
+    margin-bottom: 10px; /* Espacement en bas des valeurs */
+}
+
+.fiche-footer {
+    margin-top: 20px; /* Espacement en haut du pied de page */
+    text-align: center; /* Alignement centré du pied de page */
+    font-style: italic; /* Style italique pour le pied de page */
+    color: #666; /* Couleur de texte légèrement plus sombre */
+}
