@@ -32,6 +32,7 @@
                 <td>{{ donation.image }}</td>
                 <td>
                     <a href="{{ path('app_donation_back_show', {'id': donation.id}) }}">show</a>
+                    {{ include('donation_back/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}

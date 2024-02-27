@@ -20,7 +20,7 @@ class Donation
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank (message:'champ obligatoire')]
     #[Assert\Regex(
-        pattern: '/^[a-z]+$/i',
+        pattern: '/^[a-zA-Z _-]+$/i', 
         message: 'le nom du produit ne contient pas des nombre',
         match: true
     )]
@@ -30,7 +30,7 @@ class Donation
     #[Assert\NotBlank (message:'champ obligatoire')]
     #[Assert\Length(
         min: 3,
-        max: 7,
+        max: 50,
         minMessage: 'longeure insuffisante (min {{ limit }} caractères)',
         maxMessage: 'trop long ( limite atteinte({{ limit }})) ',
     )]
@@ -51,6 +51,7 @@ class Donation
     private ?bool $status = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank (message:'champ obligatoire')]
     private ?string $image = null;
 
     #[ORM\OneToMany(mappedBy: 'donation', targetEntity: FeedbackDon::class)]

@@ -22,25 +22,6 @@ class BFeedbackDonController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_b_feedback_don_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $feedbackDon = new FeedbackDon();
-        $form = $this->createForm(FeedbackDon1Type::class, $feedbackDon);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($feedbackDon);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_b_feedback_don_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('b_feedback_don/new.html.twig', [
-            'feedback_don' => $feedbackDon,
-            'form' => $form,
-        ]);
-    }
 
     #[Route('/{id}', name: 'app_b_feedback_don_show', methods: ['GET'])]
     public function show(FeedbackDon $feedbackDon): Response

@@ -1,4 +1,6 @@
 {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+
+   <input type="submit" value="Save" class="btn btn-light py-3 px-5">
 {{ form_end(form) }}

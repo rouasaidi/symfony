@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseback.html.twig' %}
 
 {% block title %}FeedbackDon index{% endblock %}
 
@@ -20,10 +20,8 @@
                 <td>{{ feedback_don.id }}</td>
                 <td>{{ feedback_don.description }}</td>
                 <td>{{ feedback_don.dateFeedback ? feedback_don.dateFeedback|date('Y-m-d') : '' }}</td>
-               
                 <td>
                     <a href="{{ path('app_feedback_don_show', {'id': feedback_don.id}) }}">show</a>
-                    <a href="{{ path('app_feedback_don_edit', {'id': feedback_don.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -34,5 +32,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_feedback_don_new') }}">Create new</a>
 {% endblock %}

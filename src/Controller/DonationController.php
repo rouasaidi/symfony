@@ -26,6 +26,7 @@ class DonationController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $donation = new Donation();
+        $donation->setStatus(0);
         $form = $this->createForm(DonationType::class, $donation);
         $form->handleRequest($request);
 
@@ -49,6 +50,14 @@ class DonationController extends AbstractController
     public function show(Donation $donation): Response
     {
         return $this->render('donation/show.html.twig', [
+            'donation' => $donation,
+        ]);
+    }
+
+    #[Route('/A/{id}', name: 'app_donation_Ashow', methods: ['GET'])]
+    public function Ashow(Donation $donation): Response
+    {
+        return $this->render('donation/Ashow.html.twig', [
             'donation' => $donation,
         ]);
     }
@@ -81,14 +90,7 @@ class DonationController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_donation_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_donation_new', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/showBack', name: 'app_donation_showBack', methods: ['GET'])]
-    public function showBack(DonationRepository $donationRepository): Response
-    {
-        return $this->render('donation/backDonation.html.twig', [
-            'donations' => $donationRepository->findAll(),
-        ]);
-    }
 }
