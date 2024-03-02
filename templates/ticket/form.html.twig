@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket Configuration{% endblock %}
+
+{% block body %}
+<div style="display: flex; justify-content: flex-end; margin-right: 10%; width: 50%;">
+    <form method="post">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_row(form.eventNom) }}
+        {{ form_row(form.eventLieu) }}
+        {{ form_row(form.eventDate) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.price, {'attr': {'readonly': 'readonly'}}) }}
+        {{ form_end(form) }}
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var typeField = document.getElementById('ticket_type');
+        var priceField = document.getElementById('ticket_price');
+
+        function updatePrice() {
+            var type = typeField.value;
+           var price = (type === 'VIP') ? 35 : ((type === 'Standard') ? 20 : 0);
+            priceField.value = price;
+        }
+
+        typeField.addEventListener('change', function() {
+            updatePrice();
+        });
+
+        updatePrice();
+    });
+</script>
+{% endblock %}
