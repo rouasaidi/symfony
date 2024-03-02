@@ -43,9 +43,7 @@
                             <th class="border-bottom-0">
                                 <h6 class="fw-semibold mb-0">CIN</h6>
                             </th>
-                            <th class="border-bottom-0">
-                                <h6 class="fw-semibold mb-0">Role</h6>
-                            </th>
+                         
                             <th class="border-bottom-0">
                                 <h6 class="fw-semibold mb-0">image</h6>
                             </th>
@@ -57,6 +55,9 @@
                         </th>
                           </tr>
                         </thead>
+                       
+
+
                         {% for a in user %}
                           <tr>
                             <td>{{ a.id }}</td>
@@ -65,7 +66,6 @@
                             <td>{{ a.password }}</td>
                             <td>{{ a.phone }}</td>
                             <td>{{ a.cin }}</td>
-                            <td>{{ a.role }}</td>
                             <td>{{ a.image }}</td>
                             <td>
                               <a href="{{ path('app_edditadmin',{'id':a.id}) }}">
@@ -84,5 +84,6 @@
     </html>
 
 </body>
+
 
 {% endblock %}

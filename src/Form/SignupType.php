@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use Webmozart\Assert\Assert as AssertAssert;
 
@@ -116,16 +118,29 @@ class SignupType extends AbstractType
                 
                 'label' => 'Image URL'
                     ])
-           // ->add('role')
-            
-            ->add('role', ChoiceType::class, [
+          // ->add('roles')
+        /*  ->add('role', CollectionType::class, [
+            'choices' => [
+                'ROLE_CLIENT' => 'ROLE_CLIENT',
+                'ROLE_ASSOCTION' => 'ROLE_ASSOCTION',
+                'ROLE_ADMIN' => 'ROLE_ADMIN',
+                
+            ],
+        ])*/
+        ->add('roles', CollectionType::class, [
+            'entry_type' => ChoiceType::class, // ItemType doit être remplacé par le type de champ pour chaque élément du tableau
+            'entry_options' => [
                 'choices' => [
-                    'CLIEN' => 'CLIENT',
-                    'ASSOCTION' => 'ASSOCTION',
-                    
+                    'ROLE_CLIENT' => 'ROLE_CLIENT',
+                    'ROLE_ASSOCTION' => 'ROLE_ASSOCTION',
+                    'ROLE_ADMIN' => 'ROLE_ADMIN',
                 ],
-            ])
-            /*->add('save',submitType::class)*/
+            ],
+           
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false, // Important pour manipuler les éléments individuels correctement
+        ]);
            
         ;
     }
@@ -136,4 +151,4 @@ class SignupType extends AbstractType
             'data_class' => User::class,
         ]);
     }
-}
+}   

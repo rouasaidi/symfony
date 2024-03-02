@@ -4,16 +4,6 @@
 
 {% block body %}
 <!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Add admin</title>
-  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-  <link rel="stylesheet" href="../assets/css/styles.min.css" />
-</head>
-
 <body>
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
@@ -27,7 +17,7 @@
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
                 </a>
-                <p class="text-center">Your Social Campaigns</p>
+                <p class="text-center"> ADD ADMIN</p>
                 {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
                 <div class="mb-3">
                   {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-lg', 'id': 'form3Example3c'}}) }}
@@ -88,10 +78,7 @@
                   {{ form_widget(form.image, {'attr': {'class': 'form-control form-control-lg', 'id': 'form3Example8c'}}) }}
                   {{ form_label(form.image, 'Image', {'label_attr': {'class': 'form-label'}}) }}
                 </div>
-                <div class="mb-4">
-                  {{ form_widget(form.role, {'attr': {'class': 'form-control form-control-lg', 'id': 'form3Example9c'}}) }}
-                  {{ form_label(form.role, 'Role', {'label_attr': {'class': 'form-label'}}) }}
-                </div>
+            
                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                   <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"> Sign Up</button>
                 </div>

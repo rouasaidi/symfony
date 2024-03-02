@@ -1,17 +1,15 @@
 <?php
-
 namespace App\Controller;
 use App\Entity\User;
-use App\Repository\UserRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use App\Form\AdminType;
 
+use App\Repository\UserRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AdminController extends AbstractController
 {
    /* #[Route('/admin', name: 'app_admin')]
@@ -22,7 +20,12 @@ class AdminController extends AbstractController
         ]);
     }
 */
-    
+private $passwordEncoder;
+
+public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+{
+    $this->passwordEncoder = $passwordEncoder;
+}
 
   #[Route('/afficher_admin', name: 'app_afficher_admin')]
   public function affciher(UserRepository $repository, Request $req): Response
@@ -43,7 +46,8 @@ class AdminController extends AbstractController
   $form->handleRequest($req);
   if ($form->isSubmitted() and $form->isValid())
   {
-  
+    $users->setPassword($this->passwordEncoder->encodePassword($users, $users->getPassword()));
+    $users->setRoles(['ROLE_admin']);
   $en->persist($users);
   $en->flush();
   return $this->redirectToRoute('app_afficher_admin', ['id' => $users->getId()]);
@@ -86,7 +90,7 @@ class AdminController extends AbstractController
       return $this->redirectToRoute("app_afficher_admin");
   }
 
- 
+
 
 
 

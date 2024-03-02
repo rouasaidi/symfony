@@ -9,9 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class SignupController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
    /* #[Route('/signup', name: 'app_signup')]
     public function index(): Response
     {
@@ -30,10 +38,12 @@ $form->handleRequest($req);
 if ($form->isSubmitted() and $form->isValid())
 {
 
+    $users->setPassword($this->passwordEncoder->encodePassword($users, $users->getPassword()));
+    $users->setRoles(['']);
 $en->persist($users);
 $en->flush();
-return $this->redirectToRoute('app_afficher', ['id' => $users->getId()]);
-//return $this->redirectToRoute("app_signup");
+//return $this->redirectToRoute('app_afficher', ['id' => $users->getId()]);
+return $this->redirectToRoute("app_login");
 
 }
     return $this->renderForm("signup/index.html.twig",[
