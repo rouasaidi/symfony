@@ -3,28 +3,66 @@
 {% block title %}FeedbackDon{% endblock %}
 
 {% block body %}
-    <h1>FeedbackDon</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ feedback_don.id }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ feedback_don.description }}</td>
-            </tr>
-            <tr>
-                <th>Date_feedback</th>
-                <td>{{ feedback_don.dateFeedback ? feedback_don.dateFeedback|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_feedback_don_index') }}">back to list</a>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Details of your FeedBack</title>
+    </head>
+    <body>
+        <div class="row gutters">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+               
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                <div class="card h-10">
+                    <div class="card-body">
+                    <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h4 class="mb-2 text-primary">FeedBack Details</h4>
+                </div>
+                
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="mb-2 text-primary">
+                        <label for="eMail">Description</label>
+                    </div>
+                    <h6 class="user-email">{{ feedback_don.description }}</h6>
+                </div>
 
-    <a href="{{ path('app_feedback_don_edit', {'id': feedback_don.id}) }}">edit</a>
-
-    {{ include('feedback_don/_delete_form.html.twig') }}
-{% endblock %}
+            </div>
+           
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+             <div class="text-right">
+                <a href="{{ path('app_feedback_don_edit', {'id': feedback_don.id}) }}"class="btn btn-sm btn-primary px-3 py-2">edit</a>
+                <div style="margin-top: 10px;"></div>
+                {{ include('feedback_don/_delete_form.html.twig') }}
+             </div>
+            
+              
+            </div>
+        </div>
+    </div>
+    
+    
+    
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+                        <!-- Rest of your HTML content for personal details and address -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
+    
+    </body>
+    {% endblock %}

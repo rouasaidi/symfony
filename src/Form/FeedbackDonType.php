@@ -28,6 +28,10 @@ class FeedbackDonType extends AbstractType
                     $feedbackDon->setDateFeedback(new \DateTime());
                     $form->add('date_feedback', null, ['disabled' => true]); // Désactiver le champ pour l'afficher sans possibilité de modification
                 }
+                else {
+                    // Pour les éditions, supprimez simplement le champ date_don du formulaire
+                    $form->remove('date_feedback');
+                }
             });
         ;
     }

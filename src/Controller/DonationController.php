@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Donation;
+use App\Entity\FeedbackDon;
 use App\Form\DonationType;
 use App\Repository\DonationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/donation')]
 class DonationController extends AbstractController
@@ -29,6 +31,7 @@ class DonationController extends AbstractController
         $donation->setStatus(0);
         $form = $this->createForm(DonationType::class, $donation);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($donation);
@@ -55,12 +58,19 @@ class DonationController extends AbstractController
     }
 
     #[Route('/A/{id}', name: 'app_donation_Ashow', methods: ['GET'])]
-    public function Ashow(Donation $donation): Response
+    public function Ashow(Donation $donation ,$id ,DonationRepository $donationRepository): Response
     {
+        
+        $donation123=new Donation();
+        $donation123=$donationRepository->find($id);
+        $donationFDesc = $donation123->getFeedbackDons(); 
+        $feedbackid =$donation123->getFeedbackDons(); 
         return $this->render('donation/Ashow.html.twig', [
-            'donation' => $donation,
+            'donation' => $donation,  'donationFDesc'=>$donationFDesc, 'feedbackid'=>$feedbackid
+        
         ]);
     }
+
 
     #[Route('/{id}/edit', name: 'app_donation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Donation $donation, EntityManagerInterface $entityManager): Response
@@ -93,4 +103,6 @@ class DonationController extends AbstractController
         return $this->redirectToRoute('app_donation_new', [], Response::HTTP_SEE_OTHER);
     }
 
+   
+  
 }

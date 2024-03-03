@@ -15,12 +15,13 @@
 	            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
 	          </div>
               {{ include('donation/_form.html.twig', {'button_label': 'Update'}) }}
-    			</div>
+			  {{ include('donation/_delete_form.html.twig') }}
+			</div>
         </div>
     	</div>
     </section>
 
 
 
-    {{ include('donation/_delete_form.html.twig') }}
+ 
 {% endblock %}

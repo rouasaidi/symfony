@@ -1,35 +1,80 @@
+
 {% extends 'baseback.html.twig' %}
 
-{% block title %}FeedbackDon index{% endblock %}
-
 {% block body %}
-    <h1>FeedbackDon index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
+<div class="container">
+  <div class="table-container">
+    <table class="custom-table">
+      <tr>
                 <th>Description</th>
                 <th>Date_feedback</th>
+                <th>DonationName</th>
                 <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for feedback_don in feedback_dons %}
+        <th style="width: 400px;"> </tr>
+            {% for feedback_don in feedback_dons %}
             <tr>
-                <td>{{ feedback_don.id }}</td>
                 <td>{{ feedback_don.description }}</td>
                 <td>{{ feedback_don.dateFeedback ? feedback_don.dateFeedback|date('Y-m-d') : '' }}</td>
+                <td>{{ feedback_don.donation }}</td>
                 <td>
                     <a href="{{ path('app_b_feedback_don_show', {'id': feedback_don.id}) }}">show</a>
                 </td>
             </tr>
-        {% else %}
+            {% else %}
             <tr>
                 <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
-        </tbody>
     </table>
+  </div>
+  <aside class="sidebar">
+    <!-- Aside content goes here -->
+  </aside>
+</div>
 
+<style>
+.container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+}
+
+.table-container {
+  flex: 1;
+  margin-right: 20px;
+  margin-left: 80px; 
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f2f2f2;
+}
+
+
+.custom-table th {
+  background-color: #333;
+  color: #fff;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 10px;
+  text-align: left;
+  width: auto;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #ddd;
+}
+
+.sidebar {
+  width: 300px;
+  /* Add your sidebar styles here */
+}
+.event-image {
+  max-width: 100px; /* Adjust the width as needed */
+  max-height: 100px; /* Adjust the height as needed */
+}
+</style>
 {% endblock %}

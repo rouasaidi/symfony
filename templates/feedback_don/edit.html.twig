@@ -3,11 +3,29 @@
 {% block title %}Edit FeedbackDon{% endblock %}
 
 {% block body %}
-    <h1>Edit FeedbackDon</h1>
+{% set backgroundImageUrl = asset('images/image_5.jpg') %}
+<section class="ftco-section ftco-consult ftco-no-pt ftco-no-pb" style="background-image: url('{{ backgroundImageUrl }}');" data-stellar-background-ratio="0.5">
+    	<div class="container">
+    		<div class="row justify-content-end">
+    			<div class="col-md-6 py-5 px-md-5 bg-primary">
+	          <div class="heading-section heading-section-white ftco-animate mb-5">
+	          	<span class="subheading">What do you think</span>
+	            <h2 class="mb-4">Give Us Your Feedback</h2>
+	            <p>Your Feedback, and every  word you write, can make an impact, and motivates peaple to donate more.</p>
+	          </div>
+              {{ include('feedback_don/_form.html.twig', {'button_label': 'Update'}) }}
+              {{ include('feedback_don/_delete_form.html.twig') }}
 
-    {{ include('feedback_don/_form.html.twig', {'button_label': 'Update'}) }}
+    			</div>
+        </div>
+    	</div>
+    </section>
+ 
 
-    <a href="{{ path('app_feedback_don_index') }}">back to list</a>
+  
+   {% endblock %}
 
-    {{ include('feedback_don/_delete_form.html.twig') }}
-{% endblock %}
+
+   
+
+    
