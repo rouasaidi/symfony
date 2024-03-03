@@ -5,21 +5,21 @@
 {% block body %}
     <h1>Categorie index</h1>
 
-    <table class="table">
-        <thead>
+    <table class="table mt-4">
+        <thead class="bg-light">
             <tr>
-                <th>Id</th>
+              
                 <th>Type</th>
                 <th>Image</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for categorie in categories %}
             <tr>
-                <td>{{ categorie.id }}</td>
+                
                 <td>{{ categorie.type }}</td>
-                <td>{{ categorie.image }}</td>
+                <td><img src=" {{asset(categorie.image) }}" class="rounded img-fluid" width="50px" height="50px"></td>
                 <td>
                     <a class="btn btn-secondary py-1 px-1" href="{{ path('app_categorie_show', {'id': categorie.id}) }}">show</a>
                     <a class="btn btn-info py-1 px-3" href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
@@ -36,4 +36,6 @@
     </table>
 
     <a class="btn btn-secondary py-1 px-1" href="{{ path('app_categorie_new') }}">Create new</a>
+    
+
 {% endblock %}

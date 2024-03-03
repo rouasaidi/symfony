@@ -3,29 +3,107 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Rating;
 use App\Form\ProductType;
+use App\Form\RatingFormType;
+use App\Repository\CategorieRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use HTTP_Request2;
+use HTTP_Request2_Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/product')]
 class ProductController extends AbstractController
 {
-    #[Route('/', name: 'app_product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    #[Route('/aa', name: 'app_product_index', methods: ['GET'])]
+    public function index(ProductRepository $productRepository, CategorieRepository $categorieRepository, PaginatorInterface $paginator, Request $request, CacheInterface $cache): Response
+    {
+        $limit = 6;
+
+
+        $page = (int)$request->query->get("page", 1);
+
+
+        $filters = $request->get("categories");
+
+        $produits = $productRepository->getPaginatedProduits($page, $limit, $filters);
+
+        $total = $productRepository->getTotalProduits($filters);
+
+
+
+        $pagination = $paginator->paginate(
+            $produits,
+            $request->query->getInt('page', 1),
+            6
+        );
+
+
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('product/backk.html.twig', compact('produits', 'total', 'limit', 'page'))
+            ]);
+        }
+        $categories = $cache->get('app_categorie_index', function (ItemInterface $item) use ($categorieRepository) {
+            $item->expiresAfter(3600);
+
+            return $categorieRepository->findAll();
+        });
+
+        $categorieRepository;
+        $categories = $categorieRepository->findAll();
+
+
+
+
+        return $this->render('product/backk.html.twig', [
+
+            'products' => $productRepository->findAll(),
+            'pagination' => $pagination,
+            'categories' => $categories,
+        ]);
+        // return $this->render('product/index.html.twig', [
+        //     'products' => $productRepository->findAll(),
+        // ]);
+    }
+    #[Route('/', name: 'app_product_indexaa', methods: ['GET'])]
+    public function indexaa(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
     }
-    #[Route('/aa', name: 'app_product_indexaa', methods: ['GET'])]
-    public function indexaa(ProductRepository $productRepository): Response
+
+
+    #[Route('/topproducts', name: 'app_product_topproducts', methods: ['GET'])]
+    public function topproducts(ProductRepository $productRepository): Response
     {
-        return $this->render('product/backk.html.twig', [
-            'products' => $productRepository->findAll(),
+        return $this->render('product/index.html.twig', [
+            'products' => $productRepository->FindBestALLTimeSellers(),
+        ]);
+    }
+    #[Route('/lowerprice', name: 'app_product_lowerprice', methods: ['GET'])]
+    public function lowerprice(ProductRepository $productRepository): Response
+    {
+        return $this->render('product/index.html.twig', [
+            'products' => $productRepository->FilterbyPriceUp(),
+        ]);
+    }
+
+    #[Route('/upperprice', name: 'app_product_upperprice', methods: ['GET'])]
+    public function upperprice(ProductRepository $productRepository): Response
+    {
+        return $this->render('product/index.html.twig', [
+            'products' => $productRepository->FilterbyPriceDown(),
         ]);
     }
 
@@ -36,8 +114,50 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
+
+
+
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $product->setImage('image not set');
+            /* image metier*/
+            $pictureFile = $form->get('image')->getData();
+            if ($pictureFile) {
+                $pictureFileName = uniqid() . '.' . $pictureFile->guessExtension();
+                $pictureFile->move(
+                    $this->getParameter('picture_directory_products'),
+                    $pictureFileName
+                );
+                $pictureFileName = 'images/products/' . $pictureFileName;
+                $product->setimage($pictureFileName);
+            } else
+                $product->setimage("images/products/NoImageFound.png");
+
+            /*
+            $request = new HTTP_Request2();
+            $request->setUrl('https://3g48gv.api.infobip.com/sms/2/text/advanced');
+            $request->setMethod(HTTP_Request2::METHOD_POST);
+            $request->setConfig(array(
+                'follow_redirects' => TRUE
+            ));
+            $request->setHeader(array(
+                'Authorization' => 'App d1f3f0b56d3c1a7bd6553724408201e4-059d2158-cd04-4c06-9fbb-ffd144aeebdb',
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
+            ));
+            $request->setBody('{"messages":[{"destinations":[{"to":"21650406305"}],"from":"ServiceSMS","text":"Hello,\\n\\nThis is a test message from JoySpirt We invite you to check out website for our new product. Have a nice day!"}]}');
+            try {
+                $response = $request->send();
+                if ($response->getStatus() == 200) {
+                } else {
+                    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
+                        $response->getReasonPhrase();
+                }
+            } catch (HTTP_Request2_Exception $e) {
+                echo 'Error: ' . $e->getMessage();
+            }
+
+*/
+
             $entityManager->persist($product);
 
             $entityManager->flush();
@@ -52,10 +172,15 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
-    {
-        return $this->render('product/show.html.twig', [
+    public function show(Product $product, Request $request, EntityManagerInterface $entityManager): Response
+    {   
+        $rating = new Rating();
+        $form = $this->createForm(RatingFormType::class, $rating);
+        $form->handleRequest($request);
+
+        return $this->renderForm('product/show.html.twig', [
             'product' => $product,
+            'form' => $form,
         ]);
     }
 
@@ -66,7 +191,19 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $product->setImage('image not set');
+
+            $pictureFile = $form->get('image')->getData();
+            if ($pictureFile) {
+                $pictureFileName = uniqid() . '.' . $pictureFile->guessExtension();
+                $pictureFile->move(
+                    $this->getParameter('picture_directory_products'),
+                    $pictureFileName
+                );
+                $pictureFileName = 'images/products/' . $pictureFileName;
+                $product->setimage($pictureFileName);
+            }
+
+
 
             $entityManager->flush();
 
@@ -88,5 +225,22 @@ class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/product/aa/paginated', name: 'products_paginated_list', methods: ['GET'])]
+    public function paginatedList(Request $request, ProductRepository $productRepository): JsonResponse
+    {
+        // Récupérer le numéro de page à partir des paramètres de requête
+        $page = $request->query->getInt('page', 1);
+        // Récupérer le nombre d'éléments par page à partir des paramètres de requête
+        $limit = $request->query->getInt('limit', 10);
+
+        // Calculer l'offset en fonction du numéro de page et du nombre d'éléments par page
+        $offset = ($page - 1) * $limit;
+
+        // Récupérer les utilisateurs paginés depuis la base de données
+        $paginatedProducts = $productRepository->findPaginated($limit, $offset);
+
+        // Renvoyer les utilisateurs paginés sous forme de réponse JSON
+        return $this->json($paginatedProducts);
     }
 }

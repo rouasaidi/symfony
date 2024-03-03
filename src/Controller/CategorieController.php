@@ -30,7 +30,21 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categorie->setImage('not set ');
+            $pictureFile = $form->get('image')->getData();
+            if ($pictureFile) {
+                $pictureFileName = uniqid() . '.' . $pictureFile->guessExtension();
+                $pictureFile->move(
+                    $this->getParameter('picture_directory_products'),
+                    $pictureFileName
+                );
+                $pictureFileName = 'images/products/' . $pictureFileName;
+                $categorie->setimage($pictureFileName);
+            }
+            else
+                $categorie->setimage("images/products/NoImageFound.png");
+
+
+          
             $entityManager->persist($categorie);
             $entityManager->flush();
 
@@ -58,6 +72,18 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $pictureFile = $form->get('image')->getData();
+            if ($pictureFile) {
+                $pictureFileName = uniqid() . '.' . $pictureFile->guessExtension();
+                $pictureFile->move(
+                    $this->getParameter('picture_directory_products'),
+                    $pictureFileName
+                );
+                $pictureFileName = 'images/products/' . $pictureFileName;
+                $categorie->setimage($pictureFileName);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
