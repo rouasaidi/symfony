@@ -152,15 +152,16 @@
               <span class="hide-menu">Authentification</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+              <a class="sidebar-link" href="{{path('app_logout')}}" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
-                <span class="hide-menu">Login</span>
+                <span class="hide-menu">Logout</span>
+                
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+              <a class="sidebar-link" href="" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
@@ -231,6 +232,16 @@
                   aria-expanded="false">
                   <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" width="50" height="50" class="rounded-circle">
                 </a>
+                <li class="nav-item active dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown"> {% if app.user !=null %}
+    
+                    <span class="">Welcome {{ app.user.name }} </span>
+                     {% endif %}</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                    <a class="dropdown-item" href="{{path('app_afficher', {'id': app.user.id})}}">My Informations</a>
+                    <a class="dropdown-item" href="{{path('app_logout')}}">Deconnexion</a>
+                  </div>
+                </li>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
@@ -266,6 +277,7 @@
    {% endblock %} 
    {% block body %}
 <body>
+  
 </body>
 {% endblock %}
   <!--  Body Wrapper -->

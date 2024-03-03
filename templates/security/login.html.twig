@@ -30,14 +30,18 @@
                                             <label for="inputPassword">Password</label>
                                             <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
                                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                            <a href="{{ path('forgotten_password') }}" class="btn btn-secondary mt-3">Mot de passe oublié</a>
                                         </div>
                                       </div>
                                       <button class="btn btn-lg btn-primary" type="submit">Login</button>
+                                 
 
-                                     
+
                           
 
                                 </form>
+                                
+                           
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image">

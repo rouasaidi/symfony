@@ -5,17 +5,17 @@ namespace App\Entity;
 class PropertySearch
 {
 
-   private $nom;
+   private $name;
 
    
-   public function getNom(): ?string
+   public function getName(): ?string
    {
-       return $this->nom;
+       return $this->name;
    }
 
-   public function setNom(string $nom): self
+   public function setName(string $name): self
    {
-       $this->nom = $nom;
+       $this->name = $name;
 
        return $this;
    }

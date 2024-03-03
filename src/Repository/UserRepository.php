@@ -45,6 +45,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->getQuery()
         ->getResult();
     }
+    public function banUnbanUser($user): void
+    {
+        $isBanned = $user->isIsBanned();
+        $user->setIsBanned(!$isBanned);
+        
+        $this->getEntityManager()->flush();
+    }
 
 //    /**
 //     * @return User[] Returns an array of User objects

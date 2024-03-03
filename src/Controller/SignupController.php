@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use App\service\SendMailService;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
@@ -28,7 +29,7 @@ class SignupController extends AbstractController
         ]);
     }*/
     #[Route('/signup', name: 'app_signup')]
-public function addformulaire( ManagerRegistry $ManagerRegistry,Request $req )
+public function addformulaire( ManagerRegistry $ManagerRegistry,Request $req,SendMailService $mail)
 {
   
 $en =$ManagerRegistry->getManager();
@@ -40,8 +41,17 @@ if ($form->isSubmitted() and $form->isValid())
 
     $users->setPassword($this->passwordEncoder->encodePassword($users, $users->getPassword()));
     $users->setRoles(['']);
+    $users->setIsBanned(false);
 $en->persist($users);
 $en->flush();
+
+$mail->send(
+    'no-reply@monsite.net',
+    $users->getEmail(),
+    'Activation de votre compte sur le site e-commerce',
+    'signup ',
+    compact('users')
+);
 //return $this->redirectToRoute('app_afficher', ['id' => $users->getId()]);
 return $this->redirectToRoute("app_login");
 
@@ -76,10 +86,7 @@ return $this->redirectToRoute('app_afficher' , ['id' => $dataid->getId()]);
   #[Route('/afficher/{id}', name: 'app_afficher')]
   public function afficher(User $users,UserRepository $repository, Request $req): Response
   {
-    //  $authors=$repository ->OrderAutByEmail();//select tous
     
-     
-     // $users=$repository ->findAll();//select tous
      
   return $this->render("signup/show_user.html.twig",[
       'user'=>$users]);

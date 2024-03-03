@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Security;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Exception\LockedException;
+
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,6 +55,15 @@ class LoginformAuthenticator extends AbstractLoginFormAuthenticator
         
     
         $user = $token->getUser();
+        
+if ($user instanceof User && $user->IsisBanned()) {
+        // User is banned, deny login attempt
+       
+        $request->getSession()->getFlashBag()->add('danger', 'Votre compte a été banni.');
+         throw new LockedException('Your account has been banned.');
+      
+        
+    }
 
     if(in_array('ROLE_ADMIN',$user->getRoles(),true)) {
         return new RedirectResponse($this->urlGenerator->generate('app_afficher_admin'));

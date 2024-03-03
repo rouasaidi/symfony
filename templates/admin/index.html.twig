@@ -3,6 +3,8 @@
 {% block title %}Hello Adminlist{% endblock %}
 
 {% block body %}
+
+
 <body>
     <!doctype html>
     <html lang="en">
@@ -13,6 +15,9 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>Profil </title>
     </head>
+
+
+
     
     <body>
    
@@ -53,6 +58,9 @@
                           <th class="border-bottom-0">
                             <h6 class="fw-semibold mb-0">delete</h6>
                         </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">ban</h6>
+                      </th>
                           </tr>
                         </thead>
                        
@@ -75,8 +83,21 @@
                             <td>
                                 <a href="{{ path('app_deleteadmin',{'id':a.id}) }}" >
                                     <img src="https://static.vecteezy.com/system/resources/previews/000/442/652/original/delete-vector-icon.jpg" alt="Supprimer" width="40" height="40"> <!-- Insérer l'URL de l'image de suppression -->
+                                    
                                 </a>
+                              
                             </td>
+                            <td>
+                              {% if a.isbanned %}
+                                  <span class="badge badge-danger" style="color: black;">Banned</span>
+                              {% else %}
+                                  <span class="badge badge-success" style="color: black;">Not Banned</span>
+                              {% endif %}
+                              <div>
+                                <a href="{{ path('ban_user', {'id': a.id}) }}" class="btn btn-danger">Ban / Unban</a>
+                            </div>
+                          </td>
+                
                           </tr>
                         {% endfor %}
     </table>

@@ -31,6 +31,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private $is_verified = false;
+
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private $resetToken;
+    #[ORM\Column]
+    private ?bool $isBanned = null;
     #[ORM\Column]
     private array $roles = [];
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Ticket::class)]
@@ -152,6 +159,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+public function getIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function setIsVerified(bool $is_verified): self
+    {
+        $this->is_verified = $is_verified;
+
+        return $this;
+    }
+    public function isIsBanned(): ?bool
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned(bool $isBanned): static
+    {
+        $this->isBanned = $isBanned;
+
+        return $this;
+    }
+
 
     /**
      * A visual identifier that represents this user.
