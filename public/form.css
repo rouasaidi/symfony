@@ -1,0 +1,63 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the table header */
+.table thead {
+    background-color: #f8f9fa;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Alternate row colors */
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Hover effect on table rows */
+.table tbody tr:hover {
+    background-color: #e2e6ea;
+    transition: background-color 0.3s ease;
+}
+
+/* Style links in table cells */
+.table a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.table a:hover {
+    color: #0056b3;
+}
+
+/* Style the "No records found" message */
+.table .no-records {
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Make the "Create new" link stand out */
+.create-new-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.create-new-link:hover {
+    background-color: #218838;
+}

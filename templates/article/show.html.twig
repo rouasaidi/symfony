@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ article.image }}')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-2 bread">{{ article.title }}</h1>
+                    <p class="breadcrumbs">
+                        <span class="mr-2"><a href="{{ path('app_home') }}">Home <i class="ion-ios-arrow-forward"></i></a></span> 
+                        <span class="mr-2"><a href="{{ path('app_blog_single') }}">Blog <i class="ion-ios-arrow-forward"></i></a></span> 
+                        <span>{{ article.title }} <i class="ion-ios-arrow-forward"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 ftco-animate">
+                    <p>{{ article.content }}</p>
+                     <img src="{{ vich_uploader_asset(article) }}" alt="image desc" style="width:1000px">
+                    <!-- Button to edit the article -->
+<div class="container">
+    <div class="row justify-content-between pt-5 mt-5">
+        <div class="col-md-6">
+            <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-primary btn">Edit Article</a>
+        </div>
+        
+        <div class="col-md-6">
+            <a href="{{ path('app_article_index', {'id': article.id}) }}" class="btn btn-primary btn">Back to List</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Comment form below the article content -->
+<div class="pt-5 mt-5">
+    <h3 class="mb-5 h4 font-weight-bold">Leave a Comment</h3>
+    <form action="{{ path('app_comment_new') }}" method="post">
+        <button type="submit" class="btn btn-primary">Leave a Comment</button>
+       
+    </form>
+</div>
+
+
+                    <!-- Comments -->
+                    <div class="pt-5 mt-5">
+                        <h3 class="mb-5 h4 font-weight-bold">Comments</h3>
+                        <ul class="comment-list">
+                            {% for comment in article.comments %}
+                                <li class="comment">
+                                    <div class="vcard bio" >
+                                        {% if comment.user %}
+                                            <img src="{{ comment.user.image }}" alt="User Image">
+                                        {% else %}
+                                            <img src="{{ asset('placeholder_image.jpg') }}" alt="User Image">
+                                        {% endif %}
+                                    </div>
+                                    <div class="comment-body">
+                                        {% if comment.user %}
+                                            <h3>{{ comment.user.name }}</h3>
+                                        {% else %}
+                                            <h3>Anonymous User</h3>
+                                        {% endif %}
+                                        <p>{{ comment.getDateCmt()|date('Y-m-d H:i:s')}}</p>
+
+                                        <p>{{ comment.content }}</p>
+                                        <div class="comment-actions">
+    <!-- Update button -->
+    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-primary">Update</a>
+    <!-- Delete button -->
+    <form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+        <button class="btn btn-primary ml-2">Delete</button>
+    </form>
+</div>
+
+                                       
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li class="comment">
+                                    <p>No comments found</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div> <!-- .col-md-8 -->
+
+                <div class="col-lg-4 sidebar ftco-animate">
+                    <!-- Sidebar content can be added here -->
+                </div> <!-- END COL -->
+            </div>
+        </div>
+    </section>
+{% endblock %}

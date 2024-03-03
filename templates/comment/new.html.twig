@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow" id="commentForm">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4 text-primary form-title">New Comment</h1>
+
+                        {# Display form errors if there are any #}
+                        {% if form_errors(form) %}
+                            <div class="alert alert-danger">
+                                <ul>
+                                    {% for error in form_errors(form) %}
+                                        <li>{{ error.message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        {{ form_start(form, {'attr' :{'novalidate':'novalidate'}}) }}
+                        <div class="form-group">
+                            <label for="user" class="form-label">User:</label>
+                            {{ form_widget(form.user, {'attr': {'class': 'form-control', 'placeholder': 'Enter user'}}) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="article" class="form-label">Article:</label>
+                            {{ form_widget(form.article, {'attr': {'class': 'form-control', 'placeholder': 'Enter article'}}) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="form-label">Content:</label>
+                            {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Enter content'}}) }}
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a href="{{ path('app_article_index') }}" class="btn btn-primary ml-2">Back to List</a>
+                        </div>
+                        {{ form_end(form) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
