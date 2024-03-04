@@ -45,5 +45,53 @@ class ArticleRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function save(Article $entity, bool $flush = false): void
+{
+    $this->getEntityManager()->persist($entity);
+
+    if ($flush) {
+        $this->getEntityManager()->flush();
+    }
+}
+
+public function remove(Article $entity, bool $flush = false): void
+{
+    $this->getEntityManager()->remove($entity);
+
+    if ($flush) {
+        $this->getEntityManager()->flush();
+    }
+}
+public function chart_repository(){
+    return  $this->createQueryBuilder('r')
+             -> select('r.date, COUNT(r.id) as count')
+          
+               ->groupBy('r.date')  
+               ->getQuery()
+               ->getResult()
+           ;
+   }
+   public function trie3()
+   {
+       return $this->createQueryBuilder('article')
+       ->setMaxResults(5)
+           ->orderBy('article.date', 'ASC')
+        
+           ->getQuery()
+           ->getResult();
+   }
+   public function findByTitleAndOrder($searchTerm, $order)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        if (!empty($searchTerm)) {
+            $qb->andWhere('a.title LIKE :searchTerm')
+               ->setParameter('searchTerm', '%' . $searchTerm . '%');
+        }
+
+        $qb->orderBy('a.date', $order);
+
+        return $qb->getQuery()->getResult();
+    }
 
 }

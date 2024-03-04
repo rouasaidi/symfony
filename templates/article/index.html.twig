@@ -25,7 +25,8 @@
                             <a href="{{ path('app_article_show', {'id': article.id}) }}" class="block-20 d-flex align-items-end" style="background-image: url('{{ vich_uploader_asset(article, 'imageFile') }}');">
                                 <div class="meta-date text-center p-2">
                                     <!-- Simply output the date string -->
-                                    <span>{{ article.date }}</span>
+                                    
+                                    <span>{{ article.getDate ()|date('Y-m-d')}}</span>
                                 </div>
                             </a>
                             <div class="text bg-white p-4" style="height: 400px; overflow: hidden;">

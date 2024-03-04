@@ -8,6 +8,8 @@
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
    {% block css %}
   <link rel="stylesheet" href="{{asset('css/styles.min.css')}}" />
+  <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+
   {% endblock %}
    <aside class="left-sidebar">
    
@@ -279,12 +281,21 @@
   </div>
 </footer>
   {% block js %}
+   <!-- Plugins JS File -->
+        <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+
   <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
 <script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+
    {% endblock %}
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
  
 
 </html>

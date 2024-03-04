@@ -107,6 +107,9 @@
   <link rel="stylesheet" href="{{ asset('css/flaticon.css') }}">
   <link rel="stylesheet" href="{{ asset('css/icomoon.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+
+
   
   <!--css connexion -->
    
@@ -122,6 +125,11 @@
      
   
     {% block js %}
+     <!-- Plugins JS File -->
+        <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
 
   <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
@@ -139,6 +147,8 @@
 <script src="{{ asset('js/google-map.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <!--js blog-single-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+
 <script src="{{ asset('js/jquery.min.js') }}"></script>
   <script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
   <script src="{{ asset('js/popper.min.js') }}"></script>

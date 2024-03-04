@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use MercurySeries\FlashyBundle\FlashyNotifier ;
+
 
 #[Route('/comment/back')]
 class CommentBackController extends AbstractController
@@ -24,7 +26,7 @@ class CommentBackController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_back_comment_delete', methods: ['POST'])]
-public function deleteBackComment(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
+public function deleteBackComment(Request $request,FlashyNotifier $flashy  ,Comment $comment, EntityManagerInterface $entityManager): Response
 {
     // Check if the CSRF token is valid
     if (!$this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
@@ -38,13 +40,14 @@ public function deleteBackComment(Request $request, Comment $comment, EntityMana
     // Remove and flush the comment entity
     $entityManager->remove($comment);
     $entityManager->flush();
+   
 
     // Redirect to the article's back page after successful deletion
     return $this->redirectToRoute('app_back_article_show', ['id' => $articleId]);
-}
+    $flashy->error('Article supprimé!', 'http://your-awesome-link.com');
     
    
     
 
 
-}
+}}

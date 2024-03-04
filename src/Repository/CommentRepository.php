@@ -28,6 +28,7 @@ use Doctrine\Persistence\ManagerRegistry;
     
             if ($flush) {
                 $this->getEntityManager()->flush();
+                
             }
         }
     

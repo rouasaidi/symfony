@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+use MercurySeries\FlashyBundle\FlashyNotifier as FlashyBundleFlashyNotifier;
+
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
@@ -25,9 +27,10 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/new', name: 'app_article_new')]
-public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+public function new(Request $request,FlashyBundleFlashyNotifier $flashy, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
 {
     $article = new Article();
+    $article->setDateCmt(new \DateTime('now'));
     $form = $this->createForm(ArticleType::class, $article);
     $form->handleRequest($request);
 
@@ -38,6 +41,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Slu
         // Persist the article to the database
         $entityManager->persist($article);
         $entityManager->flush();    
+        $flashy->success('Article ajouté!', 'http://your-awesome-link.com');
 
         // Redirect to the index page after successful creation
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
@@ -56,6 +60,8 @@ public function new(Request $request, EntityManagerInterface $entityManager, Slu
             'article' => $article,
         ]);
     }
+
+    
 
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
 public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response

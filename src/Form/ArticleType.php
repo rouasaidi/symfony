@@ -19,9 +19,7 @@ class ArticleType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
-            ->add('date', TextType::class, [
-                'attr' => ['class' => 'form-control form-control-sm'],
-            ])
+            
             ->add('user', EntityType::class, [ // Add the user field
                 'class' => User::class,
                 'choice_label' => 'name', // Assuming 'name' is the property in the User entity to display

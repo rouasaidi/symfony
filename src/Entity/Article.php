@@ -37,7 +37,8 @@ class Article
    #[Assert\Length(min: 50)]
    #[Assert\Regex("/[a-zA-Z]/")]
     private ?string $content = null;
-   
+
+    
 
     #[ORM\Column(nullable: true)]
     private ?int $likes = null;
@@ -56,14 +57,14 @@ class Article
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    private ?string $date = null;
+    
+    #[ORM\Column(type: Types::DATE_MUTABLE ,nullable: true)]
+    private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?User $user = null;
 
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article',orphanRemoval: true)]
     private Collection $comments;
 
     public function __construct()
@@ -160,12 +161,14 @@ class Article
 
         return $this;
     }
-    public function getDate(): ?string
+   
+    
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(string $date): static
+    public function setDateCmt(?\DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -174,7 +177,10 @@ class Article
 
     public function __toString()
     {
-        return $this->title;
+        return 
+        $this->title;
+        $this->date;
+
     }
 
     public function getUser(): ?User

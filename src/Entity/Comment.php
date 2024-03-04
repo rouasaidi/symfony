@@ -36,7 +36,15 @@ class Comment
     #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
     private ?Article $article = null;
 
-  
+   
+
+    #[ORM\Column]
+    private ?int $nblike = null;
+
+    #[ORM\Column]
+    private ?int $nbdislike = null;
+
+    
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
     private ?User $user = null;
 
@@ -65,6 +73,29 @@ class Comment
     public function setDateCmt(?\DateTimeInterface $date_cmt): self
     {
         $this->date_cmt = $date_cmt;
+
+        return $this;
+    }
+    public function getNblike(): ?int
+    {
+        return $this->nblike;
+    }
+
+    public function setNblike(int $nblike): self
+    {
+        $this->nblike = $nblike;
+
+        return $this;
+    }
+
+    public function getNbdislike(): ?int
+    {
+        return $this->nbdislike;
+    }
+
+    public function setNbdislike(int $nbdislike): self
+    {
+        $this->nbdislike = $nbdislike;
 
         return $this;
     }

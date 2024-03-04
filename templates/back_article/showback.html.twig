@@ -24,7 +24,7 @@
                         </div>
                         <p class="card-text" style="margin-bottom: 30px;">Likes: {{ article.likes }}</p>
                         <p class="card-text" style="margin-bottom: 30px;">Dislikes: {{ article.dislikes }}</p>
-                        <p class="card-text" style="margin-bottom: 30px;">Date: {{ article.date }}</p>
+                        <p class="card-text" style="margin-bottom: 30px;">Date: {{ article.date|date('Y-m-d H:i:s') }}</p>
                         <p class="card-text" style="margin-bottom: 30px;">User: {{ article.user.name }}</p>
                         <!-- Add other attributes as needed -->
                     </div>
