@@ -1,0 +1,107 @@
+{% extends 'baseback.html.twig' %}
+
+
+   
+
+{% block body %}
+    <div class="container">
+        <div class="table-container">
+            <h1 class="event-heading">Tickets for Event: {{ event.nom }}</h1>
+            <h1 class="event-heading">Event Place: {{ event.lieu }}</h1>
+
+            <table class="custom-table">
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Ticket Type</th>
+                    <th>Price</th>
+                </tr>
+                {% for ticket in base_tickets %}
+                    <tr>
+                        <td>{{ ticket.getRef_ticket() }}</td>
+                        <td>{{ ticket.type }}</td>
+                        <td>{{ ticket.price }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th>Total Price : {{ sum }}</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="circle-container">
+        <div class="circle">
+            <div class="circle-inner" style=" width: 120;">%</div>
+            <br>
+            <span class="circle-text">{{ vipPercentage }}%</span>
+            <span class="circle-label">VIP Tickets</span>
+        </div>
+        <!-- <div class="circle">
+            <div class="circle-inner" style="width: {{ standardPercentage }};">%</div>
+            <span class="circle-text">{{ standardPercentage }}%</span>
+            <span class="circle-label">Standard Tickets</span>
+        </div> -->
+    </div>
+    <style>
+
+        .link-button {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            height: 100vh !important;
+        }
+
+        .table-container {
+            width: 70% !important;
+        }
+
+        .event-heading {
+            color: #333 !important;
+            margin-bottom: 20px !important;
+            font-size: 24px !important;
+            font-weight: bold !important;
+        }
+
+        .custom-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            background-color: #f2f2f2 !important;
+        }
+
+        .custom-table th {
+            background-color: #333 !important;
+            color: #fff !important;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            padding: 10px !important;
+            text-align: left !important;
+            width: auto !important;
+        }
+
+        .custom-table tr:nth-child(even) {
+            background-color: #ddd !important;
+        }
+        
+        
+        
+        
+    </style>
+
+
+<style>
+    
+</style>
+
+{% endblock %}

@@ -37,6 +37,12 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?User $user = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $quantity = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $total_prix = null;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
@@ -145,6 +151,30 @@ class Event
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(?int $quantity): static
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getTotalPrix(): ?float
+    {
+        return $this->total_prix;
+    }
+
+    public function setTotalPrix(?float $total_prix): static
+    {
+        $this->total_prix = $total_prix;
 
         return $this;
     }
