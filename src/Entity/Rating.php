@@ -49,26 +49,14 @@ class Rating
         return $this;
     }
 
-    public function getComment(): ?string
+    public function getProduct(): ?Product
     {
-        return $this->Comment;
+        return $this->Product;
     }
 
-    public function setComment(?string $Comment): self
+    public function setProduct(?Product $product): self
     {
-        $this->Comment = $Comment;
-
-        return $this;
-    }
-
-    public function getArticle(): ?Article
-    {
-        return $this->Article;
-    }
-
-    public function setArticle(?Article $Article): self
-    {
-        $this->Article = $Article;
+        $this->Product = $product;
 
         return $this;
     }
@@ -89,12 +77,12 @@ class Rating
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
     public function setUser(?User $User): self
     {
-        $this->User = $User;
+        $this->user = $User;
 
         return $this;
     }

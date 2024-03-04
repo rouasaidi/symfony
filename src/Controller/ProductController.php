@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\Rating;
+use App\Entity\User;
 use App\Form\ProductType;
 use App\Form\RatingFormType;
 use App\Repository\CategorieRepository;
@@ -19,7 +20,9 @@ use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Repository\RatingRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\Mapping\Id;
 
 #[Route('/product')]
 class ProductController extends AbstractController
@@ -171,16 +174,43 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product, Request $request, EntityManagerInterface $entityManager): Response
-    {   
+    #[Route('/{id}', name: 'app_product_show', methods: ['GET', 'POST'])]
+    public function show(Product $product, Request $request, EntityManagerInterface $entityManager, RatingRepository $ratingRepository, UserRepository $userRepository, ProductRepository $productRepository, $id): Response
+    {
         $rating = new Rating();
+        $user = $userRepository->find(1);
+        $foundProduct = $productRepository->find($id);
         $form = $this->createForm(RatingFormType::class, $rating);
         $form->handleRequest($request);
+        $AveRating = $ratingRepository->findByAveRatingById($id);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $currentDate = new \DateTime();
+            $rating->setRatingDate($currentDate);
+
+            $rating->setUser($user);
+            $rating->setProduct($foundProduct);
+
+
+            $ratingRepository->save($rating, true);
+
+
+            return $this->renderForm('product/show.html.twig', [
+                'product' => $product,
+                'form' => $form,
+                'AvregeRating' =>$AveRating[0][1],
+
+
+            ]);
+        }
+
+
+
+
 
         return $this->renderForm('product/show.html.twig', [
             'product' => $product,
             'form' => $form,
+            'AvregeRating' =>$AveRating[0][1],
         ]);
     }
 
@@ -242,5 +272,32 @@ class ProductController extends AbstractController
 
         // Renvoyer les utilisateurs paginés sous forme de réponse JSON
         return $this->json($paginatedProducts);
+    }
+    #[Route('/rechercheproduct', name: 'app_product_search')]
+    public function search(Request $request, EntityManagerInterface $entityManager)
+    {
+        $searchTerm = $request->query->get('q');
+
+        // If no search term is provided, fetch all items
+        if (empty($searchTerm)) {
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder
+                ->select('p')
+                ->from(Product::class, 'p');
+        } else {
+            // If search term is provided, filter the results by the search term
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder
+                ->select('p')
+                ->from(Product::class, 'p')
+                ->where('p.name LIKE :searchTerm')
+                ->setParameter('searchTerm', '%' . $searchTerm . '%');
+        }
+
+        $products = $queryBuilder->getQuery()->getResult();
+        return $this->render('product/index.html.twig', [
+            'product' => $products,
+            'searchTerm' => $searchTerm
+        ]);
     }
 }

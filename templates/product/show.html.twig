@@ -8,10 +8,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<table class="table">
 		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ product.id }}</td>
-			</tr>
+
 			<tr>
 				<th>Name</th>
 				<td>{{ product.name }}</td>
@@ -37,6 +34,9 @@
 		<button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#ratingModal">
 			Rate
 		</button>
+		<p>Avrege Rating
+			{{AvregeRating}}
+		</p>
 		<div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">

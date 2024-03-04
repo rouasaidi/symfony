@@ -28,7 +28,7 @@ class Categorie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Product::class)]
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Product::class ,cascade: ["remove","persist"])]
     private Collection $products;
 
     #[ORM\ManyToOne(inversedBy: 'categories')]

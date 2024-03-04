@@ -86,6 +86,7 @@ class User
         $this->feedbackDons = new ArrayCollection();
         $this->paniers = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->ratings= new ArrayCollection();
     }
 
     public function getId(): ?int

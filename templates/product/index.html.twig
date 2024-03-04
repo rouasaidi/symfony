@@ -40,7 +40,13 @@
 		</div>
 	</div>
 	<div class="row">
+	<form action="{{ path('app_product_search') }}" method="GET">
+
+  <input type="text" id="searchTerm" name="q"  placeholder="Entrez un terme de recherche">
+  <button type="submit">Rechercher</button>
+</form>
 		{% for product in products %}
+		
 			<div class="col-md-6 col-lg-3 ftco-animate">
 
 				<div class="pricing-entry bg-light pb-4 text-center">
@@ -61,6 +67,7 @@
 						<div class="btn-group" role="group">
 							<a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn btn-sm btn-primary px-3 py-2">Edit</a>
 							<a href="{{ path('app_product_delete' , {'id': product.id}) }}" class="btn btn-sm btn-primary px-3 py-2">Delete</a>
+							<a href="{{ path('app_product_show' , {'id': product.id}) }}" class="btn btn-sm btn-primary px-3 py-2">Show Product</a>
 						</div>
 					</div>
 				</div>

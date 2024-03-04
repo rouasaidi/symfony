@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -53,6 +54,7 @@ class Product
     #[ORM\Column(length: 255)]
 
     private ?string $image = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Categorie $categorie = null;
@@ -166,5 +168,10 @@ class Product
         $this->panier = $panier;
 
         return $this;
+    }
+
+    public function __construct()
+    {
+        $this->ratings= new ArrayCollection(); 
     }
 }
