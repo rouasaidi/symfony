@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class AdminType extends AbstractType
@@ -115,7 +116,24 @@ class AdminType extends AbstractType
        
                 'label' => 'Image '
                     ])
-            
+                    ->add('roles', CollectionType::class, [
+                        'entry_type' => ChoiceType::class,
+                        'entry_options' => [
+                            'choices' => [
+                                
+                                'ROLE_ADMIN' => 'ROLE_ADMIN',
+                            ],
+                            'attr' => [
+                                'class' => 'form-control form-control-lg',
+                            ],
+                            'label_attr' => [
+                                'class' => 'form-label',
+                            ],
+                        ],
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'by_reference' => false,
+                    ])
            
               //  ->add('save',submitType::class)
         ;

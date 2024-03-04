@@ -82,7 +82,7 @@ class SecurityController extends AbstractController
             // On crée les données du mail
             $context = compact('url', 'users');
             $mail->send(
-                'no-reply@e-commerce.fr',
+                'mouhamedamine.jmili@esprit.tn',
                 $users->getEmail(),
                 'Réinitialisation de mot de passe',
                 'password_reset',

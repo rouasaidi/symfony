@@ -14,6 +14,70 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>Profil </title>
+      <style>
+        /* Styles pour le tableau */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.3s ease;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .badge {
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .badge-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        /* Styles pour la barre de recherche */
+        .search-bar {
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+    </style>
+
     </head>
 
 
@@ -26,15 +90,24 @@
                 <div class="card w-100">
                   <div class="card-body p-4">
                     <h5 class="card-title fw-semibold mb-4">admin List </h5>
+                    <h2 class="card-title fw-semibold mb-4">List of administrators</h2>
+
+                    <input type="text" id="liveSearch" name="searchTerm" placeholder="Search..." class="form-control mb-3">
+
                     <div class="table-responsive">
                       <table class="table text-nowrap mb-0 align-middle">
                         <thead class="text-dark fs-4">
+                         
                           <tr>
                             <th class="border-bottom-0">
                               <h6 class="fw-semibold mb-0">Id</h6>
                             </th>
                             <th class="border-bottom-0">
-                              <h6 class="fw-semibold mb-0">Name</h6>
+                              <h6 class="fw-semibold mb-0">Name
+                                <i id="sortIcon" class="fas fa-sort">
+                                  <span>&#9660;</span> 
+                                </i>
+                              </h6>
                             </th>
                             <th class="border-bottom-0">
                               <h6 class="fw-semibold mb-0">Email</h6>
@@ -64,7 +137,7 @@
                           </tr>
                         </thead>
                        
-
+                       
 
                         {% for a in user %}
                           <tr>
@@ -103,6 +176,103 @@
     </table>
     </body>
     </html>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var sortOrder = 'desc'; // Initial sorting order
+    
+            $('#sortIcon').on('click', function() {
+                // Change sorting order on each click
+                sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+                
+                // Send AJAX request to sort users
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path("user_sort") }}', // Modify this URL according to your route
+                    data: { sortOption: 'name', sortDirection: sortOrder },
+                    dataType: 'json',
+                    success: function(response) {
+                        // Update table with sorted users
+                        updateTableWithUsers(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error sorting users:', error);
+                    }
+                });
+            });
+        });
+    
+        // Function to update table with sorted users
+        function updateTableWithUsers(users) {
+            var tbody = $('table'); // Sélectionnez l'élément du tableau correctement
+            tbody.find('tbody').empty(); // Videz le contenu actuel du tableau
+    
+            // Ajoutez les utilisateurs triés au tableau
+            if (users.length > 0) {
+                $.each(users, function(index, user) {
+                    var bannedStatus = user.isBanned ? "<span class='badge badge-danger'>Banned</span>" : "<span class='badge badge-success'>Not Banned</span>";
+                    var row = "<tr>" +
+                        "<td>" + user.id + "</td>" +
+                        "<td>" + user.name + "</td>" +
+                        "<td>" + user.email + "</td>" +
+                        "<td>" + user.password+ "</td>" +
+                        "<td>" + user.phone + "</td>" +
+                        "<td>" + user.cin + "</td>" +
+                        "<td>" + user.image + "</td>" +
+                        "<td>" + bannedStatus + "</td>" +
+                        "<td>" +
+                        // Add other columns if necessary
+                        "</tr>";
+                    tbody.find('tbody').append(row);
+                });
+            } else {
+                tbody.append('<tr><td colspan="7" class="text-center">No records found</td></tr>');
+            }
+        }
+    </script>
+<script>
+  $(document).ready(function() {
+      $('#liveSearch').on('input', function() {
+          var query = $(this).val().trim();
+
+          $.ajax({
+              type: 'GET',
+              url: '{{ path("user_search") }}',
+              data: { query: query },
+              dataType: 'json',
+              success: function(response) {
+                  var tbody = $('table').find('tbody');
+                  tbody.empty(); // Effacer le contenu existant du tbody
+
+                  if (response.length > 0) {
+                      $.each(response, function(index, user) {
+                          var bannedStatus = user.isBanned ? "<span class='badge badge-danger'>Banned</span>" : "<span class='badge badge-success'>Not Banned</span>";
+                          var row = "<tr>" +
+                              "<td>" + user.id + "</td>" +
+                              "<td>" + user.name + "</td>" +
+                              "<td>" + user.email + "</td>" +
+                              "<td>" + user.password+ "</td>" +
+                              "<td>" + user.phone + "</td>" +
+                              "<td>" + user.cin + "</td>" +
+                              "<td>" + user.image + "</td>" +
+                              "<td>" + bannedStatus + "</td>" +
+                              "</tr>";
+
+                          tbody.append(row);
+                      });
+                  } else {
+                      tbody.append('<tr><td colspan="8" class="text-center">No records found</td></tr>');
+                  }
+              },
+              error: function(xhr, status, error) {
+                  console.error('There was a problem with the AJAX request:', error);
+              }
+          });
+      });
+  });
+</script>
+
+    
 
 </body>
 

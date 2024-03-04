@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Webmozart\Assert\Assert as AssertAssert;
 
-class SignupType extends AbstractType
+class SignupEditeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -118,35 +118,8 @@ class SignupType extends AbstractType
                 
                 'label' => 'Image URL'
                     ])
-          // ->add('roles')
-        /*  ->add('role', CollectionType::class, [
-            'choices' => [
-                'ROLE_CLIENT' => 'ROLE_CLIENT',
-                'ROLE_ASSOCTION' => 'ROLE_ASSOCTION',
-                'ROLE_ADMIN' => 'ROLE_ADMIN',
-                
-            ],
-        ])*/
-        ->add('roles', CollectionType::class, [
-            'entry_type' => ChoiceType::class,
-            'entry_options' => [
-                'choices' => [
-                    'ROLE_CLIENT' => 'ROLE_CLIENT',
-                    'ROLE_ASSOCIATION' => 'ROLE_ASSOCIATION',
-                   
-                ],
-                'attr' => [
-                    'class' => 'form-control form-control-lg',
-                ],
-                'label_attr' => [
-                    'class' => 'form-label',
-                ],
-            ],
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false,
-        ])  
-       // ->add('signup',submitType::class)
+        
+     
            
         ;
     }

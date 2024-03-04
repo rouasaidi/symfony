@@ -3,10 +3,10 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\AbstractType;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -18,16 +18,14 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
 use Symfony\Component\Validator\Constraints as Assert;
-use Webmozart\Assert\Assert as AssertAssert;
 
-class SignupType extends AbstractType
+class AdminEditeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-       ->add('name', TextType::class, [
+        ->add('name', TextType::class, [
             'constraints' => [
                 new NotBlank([
                     'message' => 'The name field cannot be empty.',
@@ -58,7 +56,7 @@ class SignupType extends AbstractType
             ],
             'invalid_message' => 'L\'adresse email est invalide.', // Message d'erreur personnalisé
         ])
-            ->add('password')
+           //->add('password')
             ->add('password', PasswordType::class, [
                 'constraints' => [
                     new NotBlank([
@@ -115,41 +113,16 @@ class SignupType extends AbstractType
         ])
             ->add('image', UrlType::class, [
         
-                
-                'label' => 'Image URL'
+       
+                'label' => 'Image '
                     ])
-          // ->add('roles')
-        /*  ->add('role', CollectionType::class, [
-            'choices' => [
-                'ROLE_CLIENT' => 'ROLE_CLIENT',
-                'ROLE_ASSOCTION' => 'ROLE_ASSOCTION',
-                'ROLE_ADMIN' => 'ROLE_ADMIN',
-                
-            ],
-        ])*/
-        ->add('roles', CollectionType::class, [
-            'entry_type' => ChoiceType::class,
-            'entry_options' => [
-                'choices' => [
-                    'ROLE_CLIENT' => 'ROLE_CLIENT',
-                    'ROLE_ASSOCIATION' => 'ROLE_ASSOCIATION',
-                   
-                ],
-                'attr' => [
-                    'class' => 'form-control form-control-lg',
-                ],
-                'label_attr' => [
-                    'class' => 'form-label',
-                ],
-            ],
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false,
-        ])  
-       // ->add('signup',submitType::class)
+                  
            
+              //  ->add('save',submitType::class)
         ;
     }
+    
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -157,4 +130,4 @@ class SignupType extends AbstractType
             'data_class' => User::class,
         ]);
     }
-}   
+}

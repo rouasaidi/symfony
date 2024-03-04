@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\User;
 use App\Form\SignupType;
+use App\Form\SignupEditeType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +41,8 @@ if ($form->isSubmitted() and $form->isValid())
 {
 
     $users->setPassword($this->passwordEncoder->encodePassword($users, $users->getPassword()));
-    $users->setRoles(['']);
+    $selectedRoles = $form->get('roles')->getData();
+    $users->setRoles($selectedRoles);
     $users->setIsBanned(false);
 $en->persist($users);
 $en->flush();
@@ -49,7 +51,7 @@ $mail->send(
     'no-reply@monsite.net',
     $users->getEmail(),
     'Activation de votre compte sur le site e-commerce',
-    'signup ',
+    'register',
     compact('users')
 );
 //return $this->redirectToRoute('app_afficher', ['id' => $users->getId()]);
@@ -69,7 +71,7 @@ public function editFormulaire($id, UserRepository $repository1, ManagerRegistry
   $users=new User();
   $en =$ManagerRegistry->getManager();
   $dataid=$repository1->find($id);
-  $form=$this->createform(SignupType::class,$dataid);
+  $form=$this->createform(SignupEditeType::class,$dataid);
   $form->handleRequest($req);
 if ($form->isSubmitted() and $form->isValid())
 {

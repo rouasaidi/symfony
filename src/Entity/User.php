@@ -29,7 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $cin = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    private ?string $image = null;  
 
     #[ORM\Column(type: 'boolean')]
     private $is_verified = false;
@@ -92,7 +92,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    //private ?string $password = null;
+    private $password = '';
 
     
 
