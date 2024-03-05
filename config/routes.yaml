@@ -5,3 +5,4 @@ search:
     path: /search
     controller: App\Controller\SearchController::search
     methods: ['GET']
+    

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<style>
+    table {
+        margin: 0 auto; /* pour centrer le tableau horizontalement */
+        border-collapse: collapse; /* pour fusionner les bordures des cellules */
+        width: 80%; /* largeur du tableau */
+    }
+    th, td {
+        padding: 8px; /* espace entre le contenu et les bordures des cellules */
+        text-align: center; /* alignement du texte au centre */
+        border: 1px solid #dddddd; /* couleur des bordures des cellules */
+    }
+    th {
+        background-color: #f2f2f2; /* couleur de fond des cellules de l'en-tête */
+    }
+</style>
+
+<table>
+    <tr>
+        <th>name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Cin</th>
+   
+        <th>QR Code</th>
+    </tr>
+    {% for user in users %} {# Utilisez la variable 'users' plutôt que 'user' #}
+    <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.cin }}</td>
+
+        <td>
+            <a href="{{ path('user_fetch_qr', {'id': user.id}) }}">
+                <button type="button" class="btn btn-sm btn-outline-secondary" title="qr">
+                    <i class="fa fa-edit"></i>
+                </button>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

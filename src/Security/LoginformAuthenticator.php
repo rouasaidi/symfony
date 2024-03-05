@@ -18,6 +18,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+
 
 class LoginformAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -69,9 +71,19 @@ if ($user instanceof User && $user->IsisBanned()) {
         return new RedirectResponse($this->urlGenerator->generate('app_afficher_admin'));
        
     }
+    if(in_array('ROLE_CLIENT',$user->getRoles(),true)) {
+        return new RedirectResponse($this->urlGenerator->generate('app_products'));
+      
+        
+    }
+    if(in_array('ROLE_ASSOCIATION',$user->getRoles(),true)) {
+        return new RedirectResponse($this->urlGenerator->generate('app_donation'));
+       
+    }
+    //throw new AccessDeniedException();
 
     // Rediriger vers une route spécifique, par exemple:
-    return new RedirectResponse($this->urlGenerator->generate('app_home'));
+   // return new RedirectResponse($this->urlGenerator->generate('app_home'));
   
     }
 

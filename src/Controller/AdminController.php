@@ -12,6 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Label\Font\NotoSans;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AdminController extends AbstractController
 {
@@ -175,5 +183,82 @@ public function __construct(UserPasswordEncoderInterface $passwordEncoder)
       // Retourner les résultats de la recherche en tant que réponse JSON
       return $this->json($users);
   }
+  
+
+
+  #[Route('/users/paginated', name: 'user_paginated_list', methods: ['GET'])]
+  public function paginatedList(Request $request, UserRepository $userRepository): JsonResponse
+  {
+      // Récupérer le numéro de page à partir des paramètres de requête
+      $page = $request->query->getInt('page', 1);
+      // Récupérer le nombre d'éléments par page à partir des paramètres de requête
+      $limit = $request->query->getInt('limit', 10);
+  
+      // Calculer l'offset en fonction du numéro de page et du nombre d'éléments par page
+      $offset = ($page - 1) * $limit;
+  
+      // Récupérer les utilisateurs paginés depuis la base de données
+      $paginatedUsers = $userRepository->findPaginated($limit, $offset);
+  
+      // Renvoyer les utilisateurs paginés sous forme de réponse JSON
+      return $this->json($paginatedUsers);
+  }
+
+
+
+
+
+
+
+
+  
+  #[Route('/fetch/{id}', name: 'user_fetch_qr')]
+  public function afficher_QR(int $id, UserRepository $userrepo): Response
+  { 
+      $users = $userrepo->find($id);
+  
+      if (!$users) {
+          throw $this->createNotFoundException('user not found for id '.$id);
+      }
+  
+      $qrString = sprintf(
+          "Lieu: %s\nDate: %s\nHeure",
+          $users->getName(),
+          $users->getEmail(),
+          $users->getPhone(),
+          $users->getCin()
+
+
+          
+      );
+  
+      $writer = new PngWriter();
+  
+      $qrCode = QrCode::create($qrString)
+          ->setEncoding(new Encoding('UTF-8'))
+          ->setErrorCorrectionLevel(ErrorCorrectionLevel::Low)
+          ->setSize(120)
+          ->setMargin(0)
+          ->setForegroundColor(new Color(0, 0, 0))
+          ->setBackgroundColor(new Color(255, 255, 255));
+  
+      $logo = Logo::create('images/bg_1.jpg')
+          ->setResizeToWidth(60);
+      $label = Label::create('')->setFont(new NotoSans(8));
+  
+      $qrCodes = [];
+      $qrCodes['img'] = $writer->write($qrCode, $logo)->getDataUri();
+      $qrCodes['simple'] = $writer->write(
+                              $qrCode,
+                              null,
+                              $label->setText('Simple')
+                          )->getDataUri(); 
+  
+      return $this->render('signup/show_QR.html.twig', [
+          'users' => $users,
+          'qrCodes' => $qrCodes,
+      ]);
+  }
+ 
 
 }

@@ -168,12 +168,19 @@
                               {% endif %}
                               <div>
                                 <a href="{{ path('ban_user', {'id': a.id}) }}" class="btn btn-danger">Ban / Unban</a>
-                            </div>
-                          </td>
+                             </div>
+                            </td>
+                            
                 
                           </tr>
                         {% endfor %}
     </table>
+    <div id="pagination" class="pagination"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    
+</div>
     </body>
     </html>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -271,6 +278,83 @@
       });
   });
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        // Fonction pour charger les données paginées
+        function loadPaginatedData(page, limit) {
+            $.ajax({
+                type: 'GET',
+                url: '{{ path("user_paginated_list") }}', // Chemin vers votre route Symfony
+                data: { page: page, limit: limit },
+                dataType: 'json',
+                success: function(response) {
+                    // Mettre à jour le tableau avec les données paginées
+                    updateTableWithUsers(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur lors du chargement des données paginées :', error);
+                }
+            });
+        }
+
+        // Fonction pour mettre à jour le tableau avec les utilisateurs paginés
+       
+        function updateTableWithUsers(users) {
+            var tbody = $('table'); // Sélectionnez l'élément du tableau correctement
+            tbody.find('tbody').empty(); // Videz le contenu actuel du tableau
+    
+            // Ajoutez les utilisateurs triés au tableau
+            if (users.length > 0) {
+                $.each(users, function(index, user) {
+                    var bannedStatus = user.isBanned ? "<span class='badge badge-danger'>Banned</span>" : "<span class='badge badge-success'>Not Banned</span>";
+                    var row = "<tr>" +
+                        "<td>" + user.id + "</td>" +
+                        "<td>" + user.name + "</td>" +
+                        "<td>" + user.email + "</td>" +
+                        "<td>" + user.password+ "</td>" +
+                        "<td>" + user.phone + "</td>" +
+                        "<td>" + user.cin + "</td>" +
+                        "<td>" + user.image + "</td>" +
+                        "<td>" + bannedStatus + "</td>" +
+                        "<td>" +
+                        // Add other columns if necessary
+                        "</tr>";
+                    tbody.find('tbody').append(row);
+                });
+            } else {
+                tbody.append('<tr><td colspan="7" class="text-center">No records found</td></tr>');
+            }
+        }
+        // Fonction pour mettre à jour la barre de pagination
+        function updatePagination(totalPages, currentPage) {
+            var pagination = $('#pagination');
+            pagination.empty(); // Effacer le contenu actuel de la pagination
+
+            // Ajouter les numéros de page à la pagination
+            for (var i = 1; i <= totalPages; i++) {
+                var pageLink = "<a href='#' class='page-link'>" + i + "</a>";
+                if (i === currentPage) {
+                    pageLink = "<span class='page-link current-page'>" + i + "</span>";
+                }
+                pagination.append(pageLink);
+            }
+
+            // Ajouter des gestionnaires d'événements pour les liens de page
+            pagination.find('.page-link').on('click', function(event) {
+                event.preventDefault();
+                var page = parseInt($(this).text());
+                loadPaginatedData(page, 10); // Charger les données de la page sélectionnée
+            });
+        }
+
+        // Charger les données paginées et la pagination au chargement de la page
+        loadPaginatedData(1, 10); // Par exemple, charger la première page avec 10 éléments par page
+        updatePagination(10, 1); // Par exemple, supposons qu'il y ait 10 pages au total et que nous soyons sur la première page
+    });
+</script>
+
 
     
 
