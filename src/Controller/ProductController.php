@@ -27,7 +27,7 @@ use Doctrine\ORM\Mapping\Id;
 #[Route('/product')]
 class ProductController extends AbstractController
 {
-    #[Route('/aa', name: 'app_product_index', methods: ['GET'])]
+    #[Route('/aa', name: 'app_product_indexaa', methods: ['GET'])]
     public function index(ProductRepository $productRepository, CategorieRepository $categorieRepository, PaginatorInterface $paginator, Request $request, CacheInterface $cache): Response
     {
         $limit = 6;
@@ -78,7 +78,7 @@ class ProductController extends AbstractController
         //     'products' => $productRepository->findAll(),
         // ]);
     }
-    #[Route('/', name: 'app_product_indexaa', methods: ['GET'])]
+    #[Route('/', name: 'app_product_index', methods: ['GET'])]
     public function indexaa(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
