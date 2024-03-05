@@ -300,4 +300,43 @@ class ProductController extends AbstractController
             'searchTerm' => $searchTerm
         ]);
     }
+
+    #[Route('/product/stat', name: 'product_stat', methods: ['GET'])]
+    public function productStatistics(ProductRepository $productRepository): Response
+    {
+        // Get all products from the repository
+        $products = $productRepository->findAll();
+    
+        // Initialize an array to store product counts by quantity
+        $productsByQuantity = [];
+    
+        // Calculate statistics
+        foreach ($products as $product) {
+            $quantity = $product->getQuantity();
+    
+            // Count products by quantity
+            if (!isset($productsByQuantity[$quantity])) {
+                $productsByQuantity[$quantity] = 1;
+            } else {
+                $productsByQuantity[$quantity]++;
+            }
+        }
+    
+        // Prepare statistics data
+        $statistics = [
+            'Products by Quantity' => $productsByQuantity,
+        ];
+    
+        // Render the template with statistics
+        return $this->render('product/statistics.html.twig', [
+            'statistics' => $statistics,
+        ]);
+    }
+    
+
+
+
+
+
+
 }

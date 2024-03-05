@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product Statistics
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-6">
+		<div class="row justify-content-center">
+			<div class="col-lg-8 col-md-18 mb-10">
+				<div class="card text-center">
+					<div class="card-body">
+						<h1 class="card-title mb-4">Product Statistics by Quantity</h1>
+						<canvas id="myChartQuantity" style="height: 300px; width: 100%; margin-bottom: 20px;"></canvas>
+					</div>
+				</div>
+				<a href="{{ path('app_product_indexaa') }}" class="btn btn-primary" style="color: #fff; margin-top: 20px;">Back to List</a>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		var ctxQuantity = document.getElementById('myChartQuantity').getContext('2d');
+var myChartQuantity = new Chart(ctxQuantity, {
+type: 'bar',
+data: {
+labels: [{% for quantity, count in statistics['Products by Quantity'] %}'{{ quantity }}',{% endfor %}],
+datasets: [
+{
+label: 'Number of Products',
+data: [{% for quantity, count in statistics['Products by Quantity'] %}{{ count }},{% endfor %}],
+backgroundColor: 'rgba(148, 87, 235, 0.😎', // Violet
+borderColor: 'rgba(148, 87, 235, 1)', // Violet
+borderWidth: 1
+}
+]
+},
+options: {
+responsive: false,
+maintainAspectRatio: false,
+scales: {
+yAxes: [
+{
+ticks: {
+beginAtZero: true
+}
+}
+]
+}
+}
+});
+	</script>
+{% endblock %}
