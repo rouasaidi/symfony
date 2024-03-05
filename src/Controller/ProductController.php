@@ -51,11 +51,11 @@ class ProductController extends AbstractController
         );
 
 
-        if ($request->get('ajax')) {
+        /* if ($request->get('ajax')) {
             return new JsonResponse([
                 'content' => $this->renderView('product/backk.html.twig', compact('produits', 'total', 'limit', 'page'))
             ]);
-        }
+        }*/
         $categories = $cache->get('app_categorie_index', function (ItemInterface $item) use ($categorieRepository) {
             $item->expiresAfter(3600);
 
@@ -197,7 +197,7 @@ class ProductController extends AbstractController
             return $this->renderForm('product/show.html.twig', [
                 'product' => $product,
                 'form' => $form,
-                'AvregeRating' =>$AveRating[0][1],
+                'AvregeRating' => $AveRating[0][1],
 
 
             ]);
@@ -210,7 +210,7 @@ class ProductController extends AbstractController
         return $this->renderForm('product/show.html.twig', [
             'product' => $product,
             'form' => $form,
-            'AvregeRating' =>$AveRating[0][1],
+            'AvregeRating' => $AveRating[0][1],
         ]);
     }
 
@@ -273,8 +273,8 @@ class ProductController extends AbstractController
         // Renvoyer les utilisateurs paginés sous forme de réponse JSON
         return $this->json($paginatedProducts);
     }
-    #[Route('/rechercheproduct', name: 'app_product_search')]
-    public function search(Request $request, EntityManagerInterface $entityManager)
+    #[Route('/rechercheproduct', name: 'app_product_search' )]
+    public function search(Request $request, EntityManagerInterface $entityManager )
     {
         $searchTerm = $request->query->get('q');
 
@@ -296,7 +296,7 @@ class ProductController extends AbstractController
 
         $products = $queryBuilder->getQuery()->getResult();
         return $this->render('product/index.html.twig', [
-            'product' => $products,
+            'products' => $products,
             'searchTerm' => $searchTerm
         ]);
     }
