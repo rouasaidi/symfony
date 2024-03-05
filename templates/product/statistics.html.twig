@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseback.html.twig' %}
 
 {% block title %}Product Statistics
 {% endblock %}
@@ -21,15 +21,17 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script>
 		var ctxQuantity = document.getElementById('myChartQuantity').getContext('2d');
-var myChartQuantity = new Chart(ctxQuantity, {
+var productNames = [];
+var productQuantities = [];{% for productName, quantity in productData %}productNames.push('{{ productName }}');
+productQuantities.push('{{ quantity }}');{% endfor %}var myChartQuantity = new Chart(ctxQuantity, {
 type: 'bar',
 data: {
-labels: [{% for quantity, count in statistics['Products by Quantity'] %}'{{ quantity }}',{% endfor %}],
+labels: productNames,
 datasets: [
 {
-label: 'Number of Products',
-data: [{% for quantity, count in statistics['Products by Quantity'] %}{{ count }},{% endfor %}],
-backgroundColor: 'rgba(148, 87, 235, 0.😎', // Violet
+label: 'Quantity',
+data: productQuantities,
+backgroundColor: 'rgba(148, 87, 235, 0.8)', // Violet
 borderColor: 'rgba(148, 87, 235, 1)', // Violet
 borderWidth: 1
 }

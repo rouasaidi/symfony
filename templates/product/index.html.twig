@@ -39,11 +39,12 @@
 				</div>
 			</div>
 			<div class="row">
-				<form id="searchForm" action="#" method="GET" style="margin-bottom: 20px;">
+				<form id="searchForm" action="{{ path('app_product_search') }}" method="GET" style="margin-bottom: 20px;">
 					<div class="input-group">
-						<input type="text" id="searchTerm" name="q" placeholder="Enter a product name to search">
+						<input type="text" id="searchTerm" name="q" class="form-control" placeholder="Enter a product name">
 					</div>
 				</form>
+
 
 				{% for product in products %}
 					<div class="col-md-6 col-lg-3 ftco-animate">
@@ -52,8 +53,9 @@
 								<h3 class="mb-3">{{ product.name }}</h3>
 							</div>
 							<div class="card h-100">
-								<img src="{{ asset(product.image) }}" alt="image" class="rounded img-fluid fixed-size-image">
-							</div>
+    <img src="{{ asset(product.image) }}" alt="image" class="rounded img-fluid" style="width: 200px; height: 200px; object-fit: cover;">
+</div>
+
 							<div>
 								<h3 class="mb-3">{{ product.price }}</h3>
 							</div>
@@ -84,15 +86,15 @@
 	</style>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-    $(document).ready(function () {
-        $('#searchTerm').on('input', function () {
-            var searchTerm = $(this).val().toLowerCase().trim();
-            $('.pricing-entry').each(function () {
-                var productName = $(this).find('h3').text().toLowerCase();
-                $(this).toggle(productName.includes(searchTerm));
-            });
-        });
-    });
-</script>
+		$(document).ready(function () {
+$('#searchTerm').on('input', function () {
+var searchTerm = $(this).val().toLowerCase().trim();
+$('.pricing-entry').each(function () {
+var productName = $(this).find('h3').text().toLowerCase();
+$(this).toggle(productName.includes(searchTerm));
+});
+});
+});
+	</script>
 
 {% endblock %}

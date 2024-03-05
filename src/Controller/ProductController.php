@@ -273,8 +273,8 @@ class ProductController extends AbstractController
         // Renvoyer les utilisateurs paginés sous forme de réponse JSON
         return $this->json($paginatedProducts);
     }
-    #[Route('/rechercheproduct', name: 'app_product_search' )]
-    public function search(Request $request, EntityManagerInterface $entityManager )
+    #[Route('/rechercheproduct', name: 'app_product_search')]
+    public function search(Request $request, EntityManagerInterface $entityManager)
     {
         $searchTerm = $request->query->get('q');
 
@@ -306,37 +306,22 @@ class ProductController extends AbstractController
     {
         // Get all products from the repository
         $products = $productRepository->findAll();
-    
-        // Initialize an array to store product counts by quantity
-        $productsByQuantity = [];
-    
-        // Calculate statistics
+
+        // Initialize an array to store product data
+        $productData = [];
+
+        // Prepare data for each product
         foreach ($products as $product) {
+            $productName = $product->getName();
             $quantity = $product->getQuantity();
-    
-            // Count products by quantity
-            if (!isset($productsByQuantity[$quantity])) {
-                $productsByQuantity[$quantity] = 1;
-            } else {
-                $productsByQuantity[$quantity]++;
-            }
+
+            // Store product data
+            $productData[$productName] = $quantity;
         }
-    
-        // Prepare statistics data
-        $statistics = [
-            'Products by Quantity' => $productsByQuantity,
-        ];
-    
-        // Render the template with statistics
+
+        // Render the template with product data
         return $this->render('product/statistics.html.twig', [
-            'statistics' => $statistics,
+            'productData' => $productData,
         ]);
     }
-    
-
-
-
-
-
-
 }

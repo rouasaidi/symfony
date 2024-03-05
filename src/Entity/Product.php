@@ -172,6 +172,6 @@ class Product
 
     public function __construct()
     {
-        $this->ratings= new ArrayCollection(); 
+        $this->ratings = new ArrayCollection();
     }
 }
