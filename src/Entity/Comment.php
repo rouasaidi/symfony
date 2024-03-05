@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+<<<<<<< HEAD
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
+=======
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+>>>>>>> Dev_masters-3A57/malek
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -16,6 +21,7 @@ class Comment
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+<<<<<<< HEAD
     private ?int $useid = null;
 
     #[ORM\Column(length: 255)]
@@ -46,6 +52,19 @@ class Comment
 
     
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
+=======
+
+    #[ORM\Column(length: 255)]
+    private ?string $content = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_cmt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Article $article = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+>>>>>>> Dev_masters-3A57/malek
     private ?User $user = null;
 
     public function getId(): ?int
@@ -58,7 +77,11 @@ class Comment
         return $this->content;
     }
 
+<<<<<<< HEAD
     public function setContent(?string $content): self
+=======
+    public function setContent(string $content): static
+>>>>>>> Dev_masters-3A57/malek
     {
         $this->content = $content;
 
@@ -70,12 +93,17 @@ class Comment
         return $this->date_cmt;
     }
 
+<<<<<<< HEAD
     public function setDateCmt(?\DateTimeInterface $date_cmt): self
+=======
+    public function setDateCmt(\DateTimeInterface $date_cmt): static
+>>>>>>> Dev_masters-3A57/malek
     {
         $this->date_cmt = $date_cmt;
 
         return $this;
     }
+<<<<<<< HEAD
     public function getNblike(): ?int
     {
         return $this->nblike;
@@ -99,13 +127,19 @@ class Comment
 
         return $this;
     }
+=======
+>>>>>>> Dev_masters-3A57/malek
 
     public function getArticle(): ?Article
     {
         return $this->article;
     }
 
+<<<<<<< HEAD
     public function setArticle(?Article $article): self
+=======
+    public function setArticle(?Article $article): static
+>>>>>>> Dev_masters-3A57/malek
     {
         $this->article = $article;
 
@@ -116,15 +150,23 @@ class Comment
     {
         return $this->user;
     }
+<<<<<<< HEAD
   
 
     
     public function setUser(?User $user): self
+=======
+
+    public function setUser(?User $user): static
+>>>>>>> Dev_masters-3A57/malek
     {
         $this->user = $user;
 
         return $this;
     }
+<<<<<<< HEAD
 
    
+=======
+>>>>>>> Dev_masters-3A57/malek
 }

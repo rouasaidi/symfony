@@ -1,26 +1,6 @@
 {% extends 'base.html.twig' %}
 
-<<<<<<< HEAD
-{% block title %}Hello LoginController!{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Malek Chkoundali/Desktop/gestion_blog/src/Controller/LoginController.php'|file_link(0) }}">src/Controller/LoginController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Malek Chkoundali/Desktop/gestion_blog/templates/login/index.html.twig'|file_link(0) }}">templates/login/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
-=======
-{% block title %}Log in{% endblock %}
+{% block title %}sign up{% endblock %}
 
 {% block body %}
 <body>
@@ -33,7 +13,7 @@
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">LOG IN</p>
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">SIGN UP</p>
                 <form class="mx-1 mx-md-4">
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
@@ -58,7 +38,7 @@
                     </div>
                   </div>
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-primary btn-lg me-3">Login</button>
+                  
                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
   <a href="{{path('app_signup')}}" class="btn btn-primary btn-lg me-3">Sign Up</a>
  
@@ -86,4 +66,3 @@
 </body>
 {% endblock %}
 
->>>>>>> Dev_masters-3A57/malek

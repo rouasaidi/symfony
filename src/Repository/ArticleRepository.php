@@ -45,6 +45,7 @@ class ArticleRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+<<<<<<< HEAD
 public function save(Article $entity, bool $flush = false): void
 {
     $this->getEntityManager()->persist($entity);
@@ -94,4 +95,6 @@ public function chart_repository(){
         return $qb->getQuery()->getResult();
     }
 
+=======
+>>>>>>> Dev_masters-3A57/malek
 }

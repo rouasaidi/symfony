@@ -1,6 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+<<<<<<< HEAD
 app_article_edit:
     path: /article/{id}/edit
     controller: App\Controller\ArticleController::edit
@@ -33,3 +34,5 @@ app_article_delete:
 
 
    
+=======
+>>>>>>> Dev_masters-3A57/malek

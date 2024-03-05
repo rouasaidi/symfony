@@ -1,15 +1,22 @@
 <?php
 
 namespace App\Controller;
+<<<<<<< HEAD
 
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+=======
+use App\Repository\ArticleRepository;
+use App\Repository\UserRepository;
+
+>>>>>>> Dev_masters-3A57/malek
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+<<<<<<< HEAD
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -100,3 +107,18 @@ public function edit(Request $request, Article $article, EntityManagerInterface 
     
 
 }
+=======
+
+class ArticleController extends AbstractController
+{
+    #[Route('/article', name: 'app_article')]
+    public function index(): Response
+    {
+        return $this->render('article/index.html.twig', [
+            'controller_name' => 'ArticleController',
+        ]);
+    }
+}
+
+
+>>>>>>> Dev_masters-3A57/malek

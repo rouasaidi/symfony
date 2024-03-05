@@ -14,6 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Comment[]    findAll()
  * @method Comment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+<<<<<<< HEAD
 
     class CommentRepository extends ServiceEntityRepository
     {
@@ -40,6 +41,15 @@ use Doctrine\Persistence\ManagerRegistry;
                 $this->getEntityManager()->flush();
             }
         }
+=======
+class CommentRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Comment::class);
+    }
+
+>>>>>>> Dev_masters-3A57/malek
 //    /**
 //     * @return Comment[] Returns an array of Comment objects
 //     */

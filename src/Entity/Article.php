@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+<<<<<<< HEAD
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -16,6 +17,8 @@ use App\Entity\Comment;
 
 
 #[Vich\Uploadable]
+=======
+>>>>>>> Dev_masters-3A57/malek
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -25,6 +28,7 @@ class Article
     #[ORM\Column]
     private ?int $id = null;
 
+<<<<<<< HEAD
      #[ORM\Column(length: 255 )]
      #[Assert\NotBlank]
      #[Assert\Length(max: 20)]
@@ -40,12 +44,21 @@ class Article
 
     
 
+=======
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $content = null;
+
+>>>>>>> Dev_masters-3A57/malek
     #[ORM\Column(nullable: true)]
     private ?int $likes = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $dislikes = null;
 
+<<<<<<< HEAD
     
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -60,17 +73,31 @@ class Article
     
     #[ORM\Column(type: Types::DATE_MUTABLE ,nullable: true)]
     private ?\DateTimeInterface $date = null;
+=======
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
+
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
+    private Collection $comments;
+>>>>>>> Dev_masters-3A57/malek
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?User $user = null;
 
+<<<<<<< HEAD
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article',orphanRemoval: true)]
     private Collection $comments;
 
+=======
+>>>>>>> Dev_masters-3A57/malek
     public function __construct()
     {
         $this->comments = new ArrayCollection();
     }
+<<<<<<< HEAD
    
    
     
@@ -79,6 +106,9 @@ class Article
 
 
     
+=======
+
+>>>>>>> Dev_masters-3A57/malek
     public function getId(): ?int
     {
         return $this->id;
@@ -132,6 +162,7 @@ class Article
         return $this;
     }
 
+<<<<<<< HEAD
    
    
     public function setImageFile($imageFile = null): void
@@ -148,6 +179,18 @@ class Article
     public function getImageFile(): ?File
     {
         return $this->imageFile;
+=======
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
+
+        return $this;
+>>>>>>> Dev_masters-3A57/malek
     }
 
     public function getImage(): ?string
@@ -155,12 +198,17 @@ class Article
         return $this->image;
     }
 
+<<<<<<< HEAD
     public function setImage(?string $image): self
+=======
+    public function setImage(string $image): static
+>>>>>>> Dev_masters-3A57/malek
     {
         $this->image = $image;
 
         return $this;
     }
+<<<<<<< HEAD
    
     
     public function getDate(): ?\DateTimeInterface
@@ -196,6 +244,11 @@ class Article
     }
      /**
      * @return Collection<int, Comments>
+=======
+
+    /**
+     * @return Collection<int, Comment>
+>>>>>>> Dev_masters-3A57/malek
      */
     public function getComments(): Collection
     {
@@ -216,14 +269,33 @@ class Article
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
+<<<<<<< HEAD
             if ($comment->getArticle() === $this)
             {
+=======
+            if ($comment->getArticle() === $this) {
+>>>>>>> Dev_masters-3A57/malek
                 $comment->setArticle(null);
             }
         }
 
         return $this;
     }
+<<<<<<< HEAD
         
    
+=======
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+>>>>>>> Dev_masters-3A57/malek
 }
