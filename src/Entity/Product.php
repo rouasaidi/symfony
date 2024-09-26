@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -15,19 +18,43 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'champ obligatoire')]
+    #[Assert\Regex(
+        pattern: '/^[a-z]+$/i',
+        message: 'le nom du produit ne contient pas des nombre',
+        match: true
+    )]
     private ?string $name = null;
+    #[ORM\Column]
+
+    private ?int $totalsales = 0;
+
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'champ obligatoire')]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'insuffisant {{ limit }}',
+        maxMessage: 'trop long {{ limit }} ',
+    )]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'champ obligatoire')]
+    #[Assert\Positive]
     private ?int $quantity = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'champ obligatoire')]
+    #[Assert\Positive]
     private ?float $price = null;
 
+
     #[ORM\Column(length: 255)]
+
     private ?string $image = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Categorie $categorie = null;
@@ -37,6 +64,10 @@ class Product
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Panier $panier = null;
+
+    #[ORM\OneToMany(mappedBy: 'Product', targetEntity: Rating::class)]
+    private Collection $ratings;
+
 
     public function getId(): ?int
     {
@@ -137,5 +168,10 @@ class Product
         $this->panier = $panier;
 
         return $this;
+    }
+
+    public function __construct()
+    {
+        $this->ratings = new ArrayCollection();
     }
 }

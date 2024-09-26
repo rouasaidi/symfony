@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index
+{% endblock %}
+
+{% block body %}
+	<section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-center justify-content-center">
+				<div class="col-md-9 ftco-animate text-center">
+					<h1 class="mb-2 bread">Products</h1>
+					<p class="breadcrumbs">
+						<span class="mr-2">Home
+							<i class="ion-ios-arrow-forward"></i>
+						</span>
+						<span>
+							Products
+							<i class="ion-ios-arrow-forward"></i>
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-section">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		<div class="container">
+			<div>
+				<a class="btn btn-primary px-4 py-3" href="{{ path('app_product_new') }}">Create new product</a>
+				<a class="btn btn-primary px-4 py-3" href="{{ path('app_product_topproducts') }}">Top products</a>
+				<div class="d-flex justify-content-end">
+					<a class="px-4 py-3 filterproductfront" href="{{ path('app_product_upperprice') }}">
+						<i class="bi bi-arrow-up-circle"></i>
+					</a>
+					<a class="px-4 py-3 filterproductfront " href="{{ path('app_product_lowerprice') }}">
+						<i class="bi bi-arrow-down-circle"></i>
+					</a>
+				</div>
+			</div>
+			<div class="row">
+				<form id="searchForm" action="{{ path('app_product_search') }}" method="GET" style="margin-bottom: 20px;">
+					<div class="input-group">
+						<input type="text" id="searchTerm" name="q" class="form-control" placeholder="Enter a product name">
+					</div>
+				</form>
+
+
+				{% for product in products %}
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="pricing-entry bg-light pb-4 text-center">
+							<div>
+								<h3 class="mb-3">{{ product.name }}</h3>
+							</div>
+							<div class="card h-100">
+    <img src="{{ asset(product.image) }}" alt="image" class="rounded img-fluid" style="width: 200px; height: 200px; object-fit: cover;">
+</div>
+
+							<div>
+								<h3 class="mb-3">{{ product.price }}</h3>
+							</div>
+							<div class="px-4">
+								<p>{{ product.description }}</p>
+							</div>
+							<div class="button-group">
+								<div style="margin-top: 10px;"></div>
+								<div class="btn-group" role="group">
+									<a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn btn-sm btn-primary px-3 py-2">Edit</a>
+									<a href="{{ path('app_product_delete' , {'id': product.id}) }}" class="btn btn-sm btn-primary px-3 py-2">Delete</a>
+									<a href="{{ path('app_product_show' , {'id': product.id}) }}" class="btn btn-sm btn-primary px-3 py-2">Show Product</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<style>
+		.filterproductfront:hover {
+			color: blue;
+		}
+		.filterproductfront {
+			color: black;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('#searchTerm').on('input', function () {
+var searchTerm = $(this).val().toLowerCase().trim();
+$('.pricing-entry').each(function () {
+var productName = $(this).find('h3').text().toLowerCase();
+$(this).toggle(productName.includes(searchTerm));
+});
+});
+});
+	</script>
+
+{% endblock %}

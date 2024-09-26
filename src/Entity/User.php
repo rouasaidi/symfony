@@ -67,7 +67,12 @@ class User
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commande::class)]
     private Collection $commandes;
 
-  
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Rating::class)]
+    private Collection $ratings;
+
+
+
 
     public function __construct()
     {
@@ -81,7 +86,7 @@ class User
         $this->feedbackDons = new ArrayCollection();
         $this->paniers = new ArrayCollection();
         $this->commandes = new ArrayCollection();
-       
+        $this->ratings= new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,7 +208,7 @@ class User
         return $this;
     }
 
-   
+
     /**
      * @return Collection<int, Event>
      */
@@ -234,7 +239,7 @@ class User
         return $this;
     }
 
-    
+
 
     /**
      * @return Collection<int, Comment>
@@ -476,5 +481,8 @@ class User
         return $this;
     }
 
-   
+    public function __toString(): string
+    {
+        return $this->name ?? '';
+    }
 }
